@@ -1,6 +1,8 @@
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.UseApplicationServices();
+builder.Services.UseInfrastructureServices(builder.Configuration);
+builder.Services.UseCommonServices(builder.Configuration);
+
 var app = builder.Build();
-
-app.MapGet("/", () => "Hello World!");
-
+app.UseCommonPiplines();
 app.Run();

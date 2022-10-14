@@ -1,3 +1,13 @@
 ﻿global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 global using SPA_Example.Architecture.Domain.Identity;
 global using SPA_Example.Architecture.Infrastructure.Database;
+global using SPA_Example.Architecture.Domain.Tokens;
+global using SPA_Example.Architecture.Application.DTObjects.Identity;
+global using SPA_Example.Architecture.Application;
+global using SPA_Example.Architecture.Infrastructure;
+global using SPA_Example.Startup;
+global using AutoMapper;
+global using SPA_Example.Architecture.Application.Services.Tokens;
+global using SPA_Example.Architecture.Domain.Commands;
+global using Fullstack_Example.Architecture.Application.MapperProfiles;
+global using MediatR;

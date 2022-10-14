@@ -1,4 +1,4 @@
-﻿namespace SPA_Example.Architecture.Application.Identity
+﻿namespace SPA_Example.Architecture.Domain.Tokens
 {
     public class JWTConfiguration
     {
