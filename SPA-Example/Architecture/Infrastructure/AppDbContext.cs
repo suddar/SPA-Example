@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SPA_Example.Architecture.Domain.Identity.Authentication;
+using SPA_Example.Architecture.Domain.Identity.Authorization;
 
-namespace SPA_Example.Architecture.Infrastructure.Database
+namespace SPA_Example.Architecture.Infrastructure
 {
-    public class AppDbContext : IdentityDbContext<AppUser>
+    public class AppDbContext : IdentityDbContext<AppUser, AppRole, Guid>
     {
         public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 

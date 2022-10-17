@@ -2,7 +2,7 @@
 
 namespace SPA_Example.Architecture.Domain.Identity.Authorization
 {
-    public class UserRole : IdentityRole
+    public class AppRole : IdentityRole<Guid>
     {
     }
 }

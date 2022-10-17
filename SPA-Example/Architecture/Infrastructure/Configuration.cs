@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using SPA_Example.Architecture.Domain.Identity.Authentication;
+using Microsoft.EntityFrameworkCore;
 
 namespace SPA_Example.Architecture.Infrastructure
 {
@@ -7,8 +7,12 @@ namespace SPA_Example.Architecture.Infrastructure
     {
         public static void UseInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
+            // For AppDbContext
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
+
             // For Identity
-            services.AddIdentity<AppUser, IdentityRole>()
+            services.AddIdentity<AppUser, AppRole>()
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
         }

@@ -4,8 +4,8 @@ using SPA_Example.Architecture.Application.Services.Tokens;
 
 namespace SPA_Example.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    //[Route("api/[controller]")]
+    //[ApiController]
     public class TokenController : ControllerBase
     {
         private AccessTokenService _accessTokenService;

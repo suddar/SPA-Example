@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using SPA_Example.Architecture.Application.Services;
+using System.Reflection;
 namespace SPA_Example.Architecture.Application
 {
     public static class Configuration
@@ -8,6 +9,7 @@ namespace SPA_Example.Architecture.Application
             services.UseTokenServices();
             services.UseMediatR();
             services.AddAutoMapper(typeof(MyProfile));
+            services.AddScoped<ICommandService, CommandService>();
         }
 
         private static void UseTokenServices(this IServiceCollection services)
