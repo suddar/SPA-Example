@@ -15,7 +15,7 @@ namespace SPA_Example.Controllers
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public IActionResult Post([FromBody] Command command)
+        public ActionResult<object?> Post([FromBody] Command command)
         {
             return Ok(_commandService.Handle(command));
         }

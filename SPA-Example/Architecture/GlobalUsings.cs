@@ -16,3 +16,4 @@ global using SPA_Example.Architecture.Domain.Entities;
 global using SPA_Example.Architecture.Domain.Enums;
 global using SPA_Example.Architecture.Domain.Identity.Authentication;
 global using SPA_Example.Architecture.Domain.Identity.Authorization;
+global using SPA_Example.Architecture.Application.Commands;

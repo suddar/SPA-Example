@@ -23,7 +23,10 @@ namespace SPA_Example.Architecture.Application.Services
             return command.Name switch
             {
                 #region User commands
-                CommandNames.CreateTopic => new CreateUserRequest(command),
+                CommandNames.CreateUser => new CreateUserRequest(command),
+                CommandNames.GetUserById => new GetUserByIdRequest(command),
+                CommandNames.UpdateUser => new UpdateUserRequest(command),
+                CommandNames.DeleteUser => new DeleteUserRequest(command),
                 #endregion
 
                 //#region Topic commands

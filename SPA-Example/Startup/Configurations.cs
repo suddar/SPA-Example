@@ -12,6 +12,7 @@ namespace SPA_Example.Startup
         {
             services.AddControllers();
             services.AddSwaggerGen();
+            services.AddRazorPages();
 
             JWTConfiguration JwtConfiguration = new();
             configuration.Bind("JWTConfiguration", JwtConfiguration);
@@ -49,6 +50,7 @@ namespace SPA_Example.Startup
             app.UseAuthorization();
 
             app.MapControllers();
+            app.MapRazorPages();
         }
     }
 }
