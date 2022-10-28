@@ -1,4 +1,5 @@
-﻿using SPA_Example.Architecture.Application.Services;
+﻿using FluentValidation;
+using SPA_Example.Architecture.Application.Services;
 using System.Reflection;
 namespace SPA_Example.Architecture.Application
 {
@@ -6,9 +7,10 @@ namespace SPA_Example.Architecture.Application
     {
         public static void UseApplicationServices(this IServiceCollection services)
         {
-            services.UseTokenServices();
             services.UseMediatR();
+            services.UseTokenServices();
             services.AddAutoMapper(typeof(MyProfile));
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddScoped<ICommandService, CommandService>();
         }
 

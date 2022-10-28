@@ -1,7 +1,9 @@
 ﻿namespace SPA_Example.Architecture.Domain.Entities
 {
-    public class Course
+    public class Course : BaseEntity
     {
-        public object Name { get; internal set; }
+        public int TopicId { get; set; }
+        public Topic? Topic { get; set; }
+        public string Content { get; set; } = string.Empty;
     }
 }

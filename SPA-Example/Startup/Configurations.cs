@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OAuth;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using SPA_Example.Architecture.Domain.Tokens;
 using System.Text;
@@ -51,6 +52,24 @@ namespace SPA_Example.Startup
 
             app.MapControllers();
             app.MapRazorPages();
+
+            app.MapControllers();
+
+            #region For ClientApp
+            app.UseStaticFiles(
+                new StaticFileOptions
+                {
+                    FileProvider = new PhysicalFileProvider(Path.Combine(app.Environment.ContentRootPath, "ClientApp/dist")),
+                    RequestPath = "/app"
+                });
+
+            // global cors policy
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true) // allow any origin
+                .AllowCredentials()); // allow credentials
+            #endregion
         }
     }
 }

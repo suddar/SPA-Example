@@ -3,14 +3,14 @@ using SPA_Example.Architecture.Application.Services;
 
 namespace SPA_Example.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ApiController : ControllerBase
     {
         private readonly ICommandService _commandService;
-        public ApiController(ICommandService handlerService)
+        public ApiController(ICommandService commandService)
         {
-            _commandService = handlerService;
+            _commandService = commandService;
         }
 
         [HttpPost]

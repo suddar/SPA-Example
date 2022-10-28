@@ -5,4 +5,5 @@ builder.Services.UseCommonServices(builder.Configuration);
 
 var app = builder.Build();
 app.UseCommonPiplines();
-app.Run();
+
+app.Run("https://localhost:6060");

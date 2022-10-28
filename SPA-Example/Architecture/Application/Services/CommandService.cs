@@ -18,7 +18,7 @@ namespace SPA_Example.Architecture.Application.Services
             return response.Result;
         }
 
-        private IRequest<object?> GetCommandHandler(Command command)
+        private static IRequest<object?> GetCommandHandler(Command command)
         {
             return command.Name switch
             {
@@ -29,13 +29,13 @@ namespace SPA_Example.Architecture.Application.Services
                 CommandNames.DeleteUser => new DeleteUserRequest(command),
                 #endregion
 
-                //#region Topic commands
-                //CommandNames.CreateTopic => new CreateTopicRequest(command),
+                #region Topic commands
+                CommandNames.CreateTopic => new CreateTopicRequest(command),
                 //CommandNames.GetTopics => new GetTopicsRequest(command),
-                //CommandNames.GetTopicById => new GetTopicByIdRequest(command),
-                //CommandNames.UpdateTopic => new UpdateTopicRequest(command),
-                //CommandNames.DeleteTopic => new DeleteTopicsRequest(command),
-                //#endregion
+                CommandNames.GetTopicById => new GetTopicByIdRequest(command),
+                CommandNames.UpdateTopic => new UpdateTopicRequest(command),
+                //CommandNames.DeleteTopic => new DeleteTopicRequest(command),
+                #endregion
 
                 //#region Course commands
                 //CommandNames.CreateCourse => new CreateCourseRequest(command),
