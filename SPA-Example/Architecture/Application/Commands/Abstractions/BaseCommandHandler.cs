@@ -1,10 +1,10 @@
 ﻿namespace Fullstack_Example.Architecture.Application.Commands.Abstractions
 {
-    public abstract class BaseCommandHandler
+    public abstract class BaseRequestHandler
     {
         protected readonly AppDbContext dbContext;
         protected readonly IMapper mapper;
-        public BaseCommandHandler(IServiceProvider serviceProvider)
+        public BaseRequestHandler(IServiceProvider serviceProvider)
         {
             dbContext = serviceProvider.GetRequiredService<AppDbContext>();
             mapper = serviceProvider.GetRequiredService<IMapper>();

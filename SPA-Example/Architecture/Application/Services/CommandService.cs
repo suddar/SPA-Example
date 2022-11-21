@@ -12,41 +12,20 @@ namespace SPA_Example.Architecture.Application.Services
 
         public object? Handle(Command command)
         {
-            var response = _mediator.Send(GetCommandHandler(command));
+            var request = CreateCommand(command);
+            if (request == null) return null;
+
+            var response = _mediator.Send(request);
             if (response == null) return null;
 
             return response.Result;
         }
 
-        private static IRequest<object?> GetCommandHandler(Command command)
+        public BaseRequest? CreateCommand(Command command)
         {
-            return command.Name switch
-            {
-                #region User commands
-                CommandNames.CreateUser => new CreateUserRequest(command),
-                CommandNames.GetUserById => new GetUserByIdRequest(command),
-                CommandNames.UpdateUser => new UpdateUserRequest(command),
-                CommandNames.DeleteUser => new DeleteUserRequest(command),
-                #endregion
-
-                #region Topic commands
-                CommandNames.CreateTopic => new CreateTopicRequest(command),
-                //CommandNames.GetTopics => new GetTopicsRequest(command),
-                CommandNames.GetTopicById => new GetTopicByIdRequest(command),
-                CommandNames.UpdateTopic => new UpdateTopicRequest(command),
-                //CommandNames.DeleteTopic => new DeleteTopicRequest(command),
-                #endregion
-
-                //#region Course commands
-                //CommandNames.CreateCourse => new CreateCourseRequest(command),
-                //CommandNames.GetCourses => new GetCoursesRequest(command),
-                //CommandNames.GetCourseById => new GetCourseByIdRequest(command),
-                //CommandNames.UpdateCourse => new UpdateCourseRequest(command),
-                //CommandNames.DeleteCourse => new DeleteCourseRequest(command),
-                //#endregion
-
-                _ => throw new NotImplementedException()
-            };
+            var type = Type.GetType(string.Format("SPA_Example.Architecture.Application.Commands.{0}", command.Name + "Request"));
+            if (type == null) return null;
+            return (BaseRequest?)Activator.CreateInstance(type, new object[] { command });
         }
     }
 }

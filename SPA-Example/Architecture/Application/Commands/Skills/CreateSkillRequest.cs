@@ -1,13 +1,13 @@
 ﻿namespace SPA_Example.Architecture.Application.Commands
 {
-    public class CreateSkillRequest : BaseRequest, IRequest<object?>
+    public class CreateSkillRequest : BaseRequest
     {
         public CreateSkillRequest(Command command) : base(command)
         {
         }
     }
 
-    public class CreateSkillRequestHandler : BaseCommandHandler, IRequestHandler<CreateSkillRequest, object?>
+    public class CreateSkillRequestHandler : BaseRequestHandler, IRequestHandler<CreateSkillRequest, object?>
     {
         public CreateSkillRequestHandler(IServiceProvider serviceProvider) : base(serviceProvider)
         {

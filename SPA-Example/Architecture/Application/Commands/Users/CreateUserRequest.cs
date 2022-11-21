@@ -4,14 +4,14 @@ using SPA_Example.Architecture.Application.DTObjects.Users;
 
 namespace SPA_Example.Architecture.Application.Commands
 {
-    public class CreateUserRequest : BaseRequest, IRequest<object?>
+    public class CreateUserRequest : BaseRequest
     {
         public CreateUserRequest(Command command) : base(command)
         {
         }
     }
 
-    public class CreateUserRequestHandler : BaseCommandHandler, IRequestHandler<CreateUserRequest, object?>
+    public class CreateUserRequestHandler : BaseRequestHandler, IRequestHandler<CreateUserRequest, object?>
     {
         private readonly UserManager<AppUser> _userManager;
         public CreateUserRequestHandler(IServiceProvider serviceProvider) : base(serviceProvider)

@@ -6,6 +6,11 @@
     async function sayHello() {
         var command = {
             name: "CreateTopic",
+            requestData: {
+                name:"test",
+                content:"6777",
+                status:true
+            },
         };
 
         res = await sendCommand(command);

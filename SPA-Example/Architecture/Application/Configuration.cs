@@ -7,7 +7,7 @@ namespace SPA_Example.Architecture.Application
     {
         public static void UseApplicationServices(this IServiceCollection services)
         {
-            services.UseMediatR();
+            services.AddMediatR(Assembly.GetExecutingAssembly());
             services.UseTokenServices();
             services.AddAutoMapper(typeof(MyProfile));
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
@@ -20,11 +20,6 @@ namespace SPA_Example.Architecture.Application
             services.AddSingleton<RefreshTokenService>();
             services.AddSingleton<TokenService>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
-        }
-
-        private static void UseMediatR(this IServiceCollection services)
-        {
-            services.AddMediatR(Assembly.GetExecutingAssembly());
         }
     }
 }

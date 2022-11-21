@@ -2,7 +2,7 @@
 
 namespace Fullstack_Example.Architecture.Application.Commands.Abstractions
 {
-    public abstract class BaseRequest
+    public abstract class BaseRequest: IRequest<object?>
     {
         public Command Command { get; set; }
         public BaseRequest(Command command)

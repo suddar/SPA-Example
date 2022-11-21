@@ -1,13 +1,13 @@
 ﻿namespace SPA_Example.Architecture.Application.Commands
 {
-    public class DeleteSkillRequest : BaseRequest, IRequest<object?>
+    public class DeleteSkillRequest : BaseRequest
     {
         public DeleteSkillRequest(Command command) : base(command)
         {
         }
     }
 
-    public class DeleteSkillRequestHandler : BaseCommandHandler, IRequestHandler<DeleteSkillRequest, object?>
+    public class DeleteSkillRequestHandler : BaseRequestHandler, IRequestHandler<DeleteSkillRequest, object?>
     {
         public DeleteSkillRequestHandler(IServiceProvider serviceProvider) : base(serviceProvider)
         {

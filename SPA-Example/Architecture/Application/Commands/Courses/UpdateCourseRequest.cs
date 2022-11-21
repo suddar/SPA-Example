@@ -1,13 +1,13 @@
 ﻿namespace SPA_Example.Architecture.Application.Commands
 {
-    public class UpdateCourseRequest : BaseRequest, IRequest<object?>
+    public class UpdateCourseRequest : BaseRequest
     {
         public UpdateCourseRequest(Command command) : base(command)
         {
         }
     }
 
-    public class UpdateCourseRequestHandler : BaseCommandHandler, IRequestHandler<UpdateCourseRequest, object?>
+    public class UpdateCourseRequestHandler : BaseRequestHandler, IRequestHandler<UpdateCourseRequest, object?>
     {
         public UpdateCourseRequestHandler(IServiceProvider serviceProvider) : base(serviceProvider)
         {

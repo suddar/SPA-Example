@@ -1,0 +1,1 @@
+import{S as o,i as r,s as c,e as i,c as l,n,f}from"./index.e9e1813c.js";function m(s){let e;return{c(){e=i("h1"),e.textContent="Welcome to v2"},m(t,a){l(t,e,a)},p:n,i:n,o:n,d(t){t&&f(e)}}}class p extends o{constructor(e){super(),r(this,e,null,m,c,{})}}export{p as default};
