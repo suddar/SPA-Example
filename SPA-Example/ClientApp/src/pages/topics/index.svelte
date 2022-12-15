@@ -7,11 +7,13 @@
         var command = {
             name: "CreateTopic",
             requestData: {
-                name:"test",
+                name:"testkkkk",
                 content:"6777",
                 status:true
             },
         };
+
+        console.log(command);
 
         res = await sendCommand(command);
         console.log(res);

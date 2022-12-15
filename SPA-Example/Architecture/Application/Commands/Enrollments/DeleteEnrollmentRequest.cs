@@ -13,12 +13,9 @@
         {
         }
 
-        public async Task<object?> Handle(DeleteEnrollmentRequest request, CancellationToken cancellationToken)
+        public Task<object?> Handle(DeleteEnrollmentRequest request, CancellationToken cancellationToken)
         {
-            var requestData = request?.RequestData?.ToString();
-            if (request == null || requestData == null) return default;
-
-            return new { };
+            return null;
         }
     }
 }

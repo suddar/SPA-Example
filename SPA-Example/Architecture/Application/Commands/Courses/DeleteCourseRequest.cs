@@ -18,7 +18,7 @@
             var requestData = request?.RequestData?.ToString();
             if (request == null || requestData == null) return default;
 
-            return new { };
+            return default;
         }
     }
 }

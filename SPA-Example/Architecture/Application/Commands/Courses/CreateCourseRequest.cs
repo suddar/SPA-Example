@@ -15,9 +15,12 @@
 
         public async Task<object?> Handle(CreateCourseRequest request, CancellationToken cancellationToken)
         {
-
-            var requestData = request?.RequestData?.ToString();
-            if (request == null || requestData == null) return default;
+            var validateResult = Validate<Course>(request);
+            if (validateResult != null && validateResult.IsValid)
+            {
+                Console.Write(validateResult);
+                return validateResult;
+            }
 
             return new { };
         }

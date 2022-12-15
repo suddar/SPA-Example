@@ -2,6 +2,6 @@
 {
     public interface ICommandService
     {
-        object? Handle(Command command);
+        Task<object?> Handle(Command command);
     }
 }

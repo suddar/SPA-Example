@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -13,10 +14,10 @@ namespace SPA_Example.Architecture.Application.Services.Tokens
     {
         private readonly JWTConfiguration _configuration;
         private readonly TokenService _tokenService;
-        public AccessTokenService(TokenService tokenService, JWTConfiguration configuration)
+        public AccessTokenService(TokenService tokenService, IOptions<JWTConfiguration> configuration)
         {
             _tokenService = tokenService;
-            _configuration = configuration;
+            _configuration = configuration.Value;
         }
 
         public AccessToken? GenerateToken(UserLoginDto user)

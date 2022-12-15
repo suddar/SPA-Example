@@ -15,9 +15,19 @@
 
         public async Task<object?> Handle(CreateTopicRequest request, CancellationToken cancellationToken)
         {
+            var result = Validate<Topic>(request);
+
+            if (result == null)
+                throw new NullReferenceException();
+
+            if (!result.IsValid)
+                throw new ValidationException(result.ToDictionary());
+
             var requestData = request?.RequestData?.ToString();
             if (request == null || requestData == null) return default;
-            return new { Message = "OKKKKKKKKK" };
+
+            return await Task.FromResult(new { Message = "OK" });
+
         }
     }
 }
