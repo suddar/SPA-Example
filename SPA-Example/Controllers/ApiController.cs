@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using SPA_Example.Architecture.Application.Services;
 
 namespace SPA_Example.Controllers
@@ -23,7 +24,7 @@ namespace SPA_Example.Controllers
         {
             var result = _validator.Validate(command);
             if (!result.IsValid)
-                throw new ValidationException();
+                return BadRequest();
 
             if (string.IsNullOrEmpty(command.RequestData?.ToString()))
                 return BadRequest("NOOOOOOOOOOOOOOOOOOOOO");
