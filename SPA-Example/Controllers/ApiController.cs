@@ -23,11 +23,13 @@ namespace SPA_Example.Controllers
         public async Task<ActionResult<object?>> Post([FromBody] Command command)
         {
             var result = _validator.Validate(command);
+            //TODO change later
             if (!result.IsValid)
                 return BadRequest();
 
+            //TODO change later
             if (string.IsNullOrEmpty(command.RequestData?.ToString()))
-                return BadRequest("NOOOOOOOOOOOOOOOOOOOOO");
+                return BadRequest();
 
             return Ok(await _commandService.Handle(command));
         }
