@@ -1,14 +1,13 @@
-﻿namespace SPA_Example.Architecture.Application.Exceptions.Handlers
-{
-    public class UnhandledExceptionHandler : BaseExceptionHandler
-    {
-        public UnhandledExceptionHandler(HttpContext httpContext) : base(httpContext)
-        {
-        }
+﻿using Microsoft.AspNetCore.Mvc.Filters;
+using SPA_Example.Architecture.Application.Exceptions.Handlers.Abstractions;
 
-        public override async Task HandleException(Exception exception)
+namespace SPA_Example.Architecture.Application.Exceptions.Handlers
+{
+    public class UnhandledExceptionHandler : ExceptionHandler
+    {
+        public override async Task HandleExceptionAsync(Exception exception, HttpContext httpContext)
         {
-            await WriteResponseAsync(exception);
+            await httpContext.Response.WriteAsJsonAsync(exception);
         }
     }
 }

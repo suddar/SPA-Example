@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Win32;
-using SPA_Example.Architecture.Application.DTObjects.Users;
+using SPA_Example.Architecture.Application.Mappings.DTObjects.Users;
 
 namespace SPA_Example.Architecture.Application.Commands
 {

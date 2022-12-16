@@ -21,7 +21,7 @@ namespace SPA_Example.Architecture.Application.Services
                 if (response != null)
                     return response;
             }
-            return null;
+            throw new ValidationException();
         }
 
         public BaseRequest? CreateCommand(Command command)
@@ -29,7 +29,7 @@ namespace SPA_Example.Architecture.Application.Services
             var type = Type.GetType(string.Format("SPA_Example.Architecture.Application.Commands.{0}", command.Name + "Request"));
             if (type != null)
                 return (BaseRequest?)Activator.CreateInstance(type, new object[] { command });
-            return null;
+            throw new ValidationException();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using SPA_Example.Architecture.Application.Exceptions.Handlers;
+using SPA_Example.Architecture.Application.Exceptions.Handlers.Abstractions;
 
 namespace SPA_Example.Architecture.Application.Middlewares
 {
@@ -16,14 +17,14 @@ namespace SPA_Example.Architecture.Application.Middlewares
             {
                 await _next(context);
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                BaseExceptionHandler handler = e switch
+                IExceptionHandler handler = exception switch
                 {
-                    ValidationException => new ValidationExceptionHandler(context),
-                    _ => new UnhandledExceptionHandler(context)
+                    ValidationException => new ValidationExceptionHandler(),
+                    _ => new UnhandledExceptionHandler()
                 };
-                await handler.HandleException(e);
+                await handler.HandleExceptionAsync(exception, context);
             }
         }
     }

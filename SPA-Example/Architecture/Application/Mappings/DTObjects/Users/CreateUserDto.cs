@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SPA_Example.Architecture.Application.DTObjects.Users
+namespace SPA_Example.Architecture.Application.Mappings.DTObjects.Users
 {
     public class CreateUserDto
     {

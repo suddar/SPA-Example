@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace SPA_Example.Architecture.Application.DTObjects.Identity
+namespace SPA_Example.Architecture.Application.Mappings.DTObjects.Users
 {
     public class UserLoginDto
     {

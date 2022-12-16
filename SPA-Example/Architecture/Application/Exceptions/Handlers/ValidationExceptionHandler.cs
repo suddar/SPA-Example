@@ -1,26 +1,25 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.DotNet.Scaffolding.Shared.Messaging;
-using System.Net;
+﻿using System.Net;
+using SPA_Example.Architecture.Application.Exceptions.Handlers.Abstractions;
 
 namespace SPA_Example.Architecture.Application.Exceptions.Handlers
 {
-    public class ValidationExceptionHandler : BaseExceptionHandler
+    public class ValidationExceptionHandler : ExceptionHandler
     {
-        public ValidationExceptionHandler(HttpContext httpContext) : base(httpContext) { }
-        public async override Task HandleException(Exception exception)
+        public override async Task HandleExceptionAsync(Exception exception, HttpContext httpContext)
         {
             var validationException = (ValidationException)exception;
             if (validationException == null)
                 throw new NullReferenceException();
 
-            var result = new
+            var res = new CustomResult
             {
-                StatusCode = HttpStatusCode.BadRequest,
-                validationException.Message,
-                Error = validationException.Errors
+                Title = nameof(HttpStatusCode.BadRequest),
+                Message = validationException.Message,
+                Status = HttpStatusCode.BadRequest,
+                Errors = validationException.Errors
             };
 
-            await WriteResponseAsync(result);
+            await httpContext.Response.WriteAsJsonAsync(res);
         }
     }
 }

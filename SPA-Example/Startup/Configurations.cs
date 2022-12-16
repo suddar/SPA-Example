@@ -14,6 +14,7 @@ namespace SPA_Example.Startup
             services.AddSwaggerGen();
             services.AddRazorPages();
 
+            #region Configure JWT
             JWTConfiguration JwtConfiguration = new();
             configuration.Bind("JWTConfiguration", JwtConfiguration);
             services.AddSingleton(JwtConfiguration);
@@ -36,6 +37,7 @@ namespace SPA_Example.Startup
                     ClockSkew = TimeSpan.Zero
                 };
             });
+            #endregion
         }
 
         public static void UseCommonPiplines(this WebApplication app)

@@ -8,7 +8,7 @@ namespace SPA_Example.Architecture.Application
         public static void UseApplicationServices(this IServiceCollection services)
         {
             services.AddJWTs();
-            services.AddAutoMapper(typeof(MyProfile));
+            services.AddAutoMapper(typeof(AutoMapperProfile));
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddScoped<ICommandService, CommandService>();

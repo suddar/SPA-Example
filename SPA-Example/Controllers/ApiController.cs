@@ -1,11 +1,10 @@
 ﻿using FluentValidation;
-using Microsoft.AspNetCore.Mvc;
 using SPA_Example.Architecture.Application.Services;
 
 namespace SPA_Example.Controllers
 {
     [Route("[controller]")]
-    [ApiExceptionFilter]
+    //[ApiExceptionFilter]
     [ApiController]
     public class ApiController : ControllerBase
     {
@@ -24,7 +23,7 @@ namespace SPA_Example.Controllers
         {
             var result = _validator.Validate(command);
             if (!result.IsValid)
-                return BadRequest(result);
+                throw new ValidationException();
 
             if (string.IsNullOrEmpty(command.RequestData?.ToString()))
                 return BadRequest("NOOOOOOOOOOOOOOOOOOOOO");
