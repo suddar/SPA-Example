@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
-using SPA_Example.Architecture.Domain.Tokens;
+using SPA_Example.Architecture.Application.Middlewares;
 using System.Text;
 
 namespace SPA_Example.Startup
@@ -15,9 +14,14 @@ namespace SPA_Example.Startup
             services.AddSwaggerGen();
             services.AddRazorPages();
 
+            #region Configure JWT
             JWTConfiguration JwtConfiguration = new();
             configuration.Bind("JWTConfiguration", JwtConfiguration);
             services.AddSingleton(JwtConfiguration);
+
+            //services
+            //    .AddOptions<JWTConfiguration>()
+            //    .BindConfiguration("JWTConfiguration");
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(option =>
             {
@@ -33,10 +37,13 @@ namespace SPA_Example.Startup
                     ClockSkew = TimeSpan.Zero
                 };
             });
+            #endregion
         }
 
         public static void UseCommonPiplines(this WebApplication app)
         {
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -52,8 +59,6 @@ namespace SPA_Example.Startup
 
             app.MapControllers();
             app.MapRazorPages();
-
-            app.MapControllers();
 
             #region For ClientApp
             app.UseStaticFiles(

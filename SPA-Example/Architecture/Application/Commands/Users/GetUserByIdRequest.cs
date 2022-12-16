@@ -1,13 +1,13 @@
 ﻿namespace SPA_Example.Architecture.Application.Commands
 {
-    public class GetUserByIdRequest : BaseRequest, IRequest<object?>
+    public class GetUserByIdRequest : BaseRequest
     {
         public GetUserByIdRequest(Command command) : base(command)
         {
         }
     }
 
-    public class GetUserByIdRequesttHandler : BaseCommandHandler, IRequestHandler<CreateCourseRequest, object?>
+    public class GetUserByIdRequesttHandler : BaseRequestHandler, IRequestHandler<CreateCourseRequest, object?>
     {
         public GetUserByIdRequesttHandler(IServiceProvider serviceProvider) : base(serviceProvider)
         {

@@ -7,24 +7,19 @@ namespace SPA_Example.Architecture.Application
     {
         public static void UseApplicationServices(this IServiceCollection services)
         {
-            services.UseMediatR();
-            services.UseTokenServices();
-            services.AddAutoMapper(typeof(MyProfile));
+            services.AddJWTs();
+            services.AddAutoMapper(typeof(AutoMapperProfile));
+            services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddScoped<ICommandService, CommandService>();
         }
 
-        private static void UseTokenServices(this IServiceCollection services)
+        private static void AddJWTs(this IServiceCollection services)
         {
             services.AddSingleton<AccessTokenService>();
             services.AddSingleton<RefreshTokenService>();
             services.AddSingleton<TokenService>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
-        }
-
-        private static void UseMediatR(this IServiceCollection services)
-        {
-            services.AddMediatR(Assembly.GetExecutingAssembly());
         }
     }
 }

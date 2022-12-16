@@ -1,8 +1,8 @@
 ﻿namespace Fullstack_Example.Architecture.Application.MapperProfiles
 {
-    public class MyProfile : Profile
+    public class AutoMapperProfile : Profile
     {
-        public MyProfile()
+        public AutoMapperProfile()
         {
             // Topic
             //CreateMap<Topic, CreateTopicDto>().ReverseMap();

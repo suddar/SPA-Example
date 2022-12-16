@@ -1,7 +1,7 @@
 ﻿global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 global using SPA_Example.Architecture.Domain.Identity;
 global using SPA_Example.Architecture.Domain.Tokens;
-global using SPA_Example.Architecture.Application.DTObjects.Identity;
+global using SPA_Example.Architecture.Application.Mappings.DTObjects;
 global using SPA_Example.Architecture.Application;
 global using SPA_Example.Architecture.Infrastructure;
 global using SPA_Example.Startup;
@@ -17,3 +17,6 @@ global using SPA_Example.Architecture.Domain.Enums;
 global using SPA_Example.Architecture.Domain.Identity.Authentication;
 global using SPA_Example.Architecture.Domain.Identity.Authorization;
 global using SPA_Example.Architecture.Application.Commands;
+global using SPA_Example.Architecture.Application.Exceptions;
+global using SPA_Example.Architecture.Domain.Results;
+global using SPA_Example.Architecture.Application.Mappings.DTObjects.Users;

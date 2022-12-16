@@ -1,23 +1,37 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using SPA_Example.Architecture.Application.Services;
 
 namespace SPA_Example.Controllers
 {
     [Route("[controller]")]
+    //[ApiExceptionFilter]
     [ApiController]
     public class ApiController : ControllerBase
     {
         private readonly ICommandService _commandService;
-        public ApiController(ICommandService commandService)
+        private readonly IValidator<Command> _validator;
+
+        public ApiController(ICommandService commandService, IValidator<Command> validator)
         {
             _commandService = commandService;
+            _validator = validator;
         }
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult<object?> Post([FromBody] Command command)
+        public async Task<ActionResult<object?>> Post([FromBody] Command command)
         {
-            return Ok(_commandService.Handle(command));
+            var result = _validator.Validate(command);
+            //TODO change later
+            if (!result.IsValid)
+                return BadRequest();
+
+            //TODO change later
+            if (string.IsNullOrEmpty(command.RequestData?.ToString()))
+                return BadRequest();
+
+            return Ok(await _commandService.Handle(command));
         }
     }
 }

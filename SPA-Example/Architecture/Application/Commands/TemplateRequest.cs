@@ -7,7 +7,7 @@
         }
     }
 
-    public class TemplateRequestHandler : BaseCommandHandler, IRequestHandler<TemplateRequest, object?>
+    public class TemplateRequestHandler : BaseRequestHandler, IRequestHandler<TemplateRequest, object?>
     {
         public TemplateRequestHandler(IServiceProvider serviceProvider) : base(serviceProvider)
         {

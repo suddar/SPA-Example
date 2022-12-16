@@ -2,7 +2,7 @@
 
 namespace Fullstack_Example.Architecture.Application.Commands.Abstractions
 {
-    public abstract class BaseRequest
+    public abstract class BaseRequest : IRequest<object?>
     {
         public Command Command { get; set; }
         public BaseRequest(Command command)
@@ -15,11 +15,11 @@ namespace Fullstack_Example.Architecture.Application.Commands.Abstractions
             get => Command.RequestData;
         }
 
-        public T? DeserializeObject<T>()
+        public TData? DeserializeObject<TData>()
         {
             var requestData = Command?.RequestData?.ToString();
-            if (Command == null || requestData == null) return default;
-            return JsonConvert.DeserializeObject<T>(requestData);
+            if (Command == null || requestData == null) throw new NullReferenceException();
+            return JsonConvert.DeserializeObject<TData>(requestData);
         }
     }
 }
