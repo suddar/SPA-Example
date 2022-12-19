@@ -1,4 +1,6 @@
-﻿namespace SPA_Example.Architecture.Application.Commands
+﻿using SPA_Example.Architecture.Domain.Entities.LearningUnits;
+
+namespace SPA_Example.Architecture.Application.Commands
 {
     public class CreateTopicRequest : BaseRequest
     {

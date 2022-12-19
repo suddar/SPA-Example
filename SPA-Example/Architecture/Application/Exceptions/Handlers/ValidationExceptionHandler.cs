@@ -11,7 +11,7 @@ namespace SPA_Example.Architecture.Application.Exceptions.Handlers
             if (validationException == null)
                 throw new NullReferenceException();
 
-            var res = new CustomResult
+            var res = new ExceptionResult
             {
                 Title = nameof(HttpStatusCode.BadRequest),
                 Message = validationException.Message,

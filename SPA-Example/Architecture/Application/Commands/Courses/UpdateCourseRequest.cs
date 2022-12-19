@@ -13,9 +13,9 @@
         {
         }
 
-        public Task<object?> Handle(UpdateCourseRequest request, CancellationToken cancellationToken)
+        public async Task<object?> Handle(UpdateCourseRequest request, CancellationToken cancellationToken)
         {
-            return default;
+            return await Task.FromResult(new { });
         }
     }
 }

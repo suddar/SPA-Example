@@ -8,5 +8,17 @@ namespace SPA_Example.Architecture.Infrastructure
         public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            var allEntities = modelBuilder.Model.GetEntityTypes();
+            foreach (var entity in allEntities)
+            {
+                entity.AddProperty("Created", typeof(DateTime));
+                entity.AddProperty("CreatedBy", typeof(string));
+                entity.AddProperty("LastModified", typeof(DateTime));
+                entity.AddProperty("LastModifiedBy", typeof(string));
+            }
+        }
     }
 }

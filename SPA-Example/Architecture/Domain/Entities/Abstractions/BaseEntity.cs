@@ -1,4 +1,4 @@
-﻿namespace SPA_Example.Architecture.Domain.Entities
+﻿namespace SPA_Example.Architecture.Domain.Entities.Abstractions
 {
     public class BaseEntity
     {

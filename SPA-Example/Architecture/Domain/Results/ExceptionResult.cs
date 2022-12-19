@@ -3,7 +3,7 @@ using System.Net;
 
 namespace SPA_Example.Architecture.Domain.Results
 {
-    public record CustomResult
+    public record ExceptionResult
     {
         public string? Title { get; set; }
         public HttpStatusCode Status { get; set; }

@@ -3,7 +3,7 @@
     public static class CommandNames
     {
         #region User
-        public const string CreateUser = "CreateUser";
+        public const string CreateUser = nameof(CreateUser);
         public const string GetUserById = "GetUserById";
         public const string UpdateUser = "UpdateUser";
         public const string DeleteUser = "DeleteUser";

@@ -13,9 +13,9 @@
         {
         }
 
-        public Task<object?> Handle(DeleteEnrollmentRequest request, CancellationToken cancellationToken)
+        public async Task<object?> Handle(DeleteEnrollmentRequest request, CancellationToken cancellationToken)
         {
-            return null;
+            return await Task.FromResult(new { });
         }
     }
 }

@@ -1,0 +1,10 @@
+﻿namespace SPA_Example.Architecture.Domain.Entities.LearningUnits
+{
+    /// <summary>
+    /// Math, Science, Language,...
+    /// </summary>
+    public class Subject : BaseEntity
+    {
+        public Skill? Skills { get; set; }
+    }
+}
