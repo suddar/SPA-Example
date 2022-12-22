@@ -7,6 +7,10 @@ namespace SPA_Example.Architecture.Infrastructure
     {
         public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
+        #region Entities
+        public DbSet<ResourceObject> ResourceObjects => Set<ResourceObject>();
+        #endregion
+
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

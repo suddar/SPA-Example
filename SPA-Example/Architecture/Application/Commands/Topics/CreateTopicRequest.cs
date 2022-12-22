@@ -1,5 +1,4 @@
-﻿using SPA_Example.Architecture.Domain.Entities.LearningUnits;
-
+﻿using ValidationException = SPA_Example.Architecture.Application.Exceptions.ValidationException;
 namespace SPA_Example.Architecture.Application.Commands
 {
     public class CreateTopicRequest : BaseRequest

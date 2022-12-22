@@ -21,6 +21,7 @@ global using SPA_Example.Architecture.Application.Exceptions;
 global using SPA_Example.Architecture.Domain.Results;
 global using SPA_Example.Architecture.Application.Mappings.DTObjects.Users;
 global using SPA_Example.Architecture.Domain.Entities.Abstractions;
-
-global using FluentValidation;
 global using SPA_Example.Architecture.Domain.Entities.LearningUnits;
+
+// entities
+global using SPA_Example.Architecture.Domain.Entities.Resources;

@@ -23,6 +23,7 @@ namespace SPA_Example.Controllers
         public async Task<ActionResult<object?>> Post([FromBody] Command command)
         {
             var result = _validator.Validate(command);
+
             //TODO change later
             if (!result.IsValid)
                 return BadRequest();
@@ -33,5 +34,17 @@ namespace SPA_Example.Controllers
 
             return Ok(await _commandService.Handle(command));
         }
+
+        [HttpPost("PostImage")]
+        public void PostImage([FromBody] ImageData image)
+        {
+            Console.WriteLine(image.Bytes);
+        }
+    }
+
+    public class ImageData
+    {
+        public string Name { get; set; }
+        public string[] Bytes { get; set; }
     }
 }
