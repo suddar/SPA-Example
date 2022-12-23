@@ -12,7 +12,8 @@ namespace SPA_Example.Architecture.Infrastructure
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
             // For Identity
-            services.AddIdentity<AppUser, AppRole>()
+            services
+                .AddIdentity<AppUser, AppRole>()
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
         }

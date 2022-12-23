@@ -15,7 +15,14 @@
 
         public async Task<object?> Handle(CreateCourseRequest request, CancellationToken cancellationToken)
         {
-            return await Task.FromResult(new { });
+            var course = new Course
+            {
+                Name = "Test"
+            };
+
+            await dbContext.AddAsync(course, cancellationToken);
+            await dbContext.SaveChangesAsync(cancellationToken);
+            return course;
         }
     }
 }

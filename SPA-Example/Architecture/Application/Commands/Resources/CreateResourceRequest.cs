@@ -17,9 +17,14 @@ namespace SPA_Example.Architecture.Application.Commands
 
         public async Task<object?> Handle(CreateResourceRequest request, CancellationToken cancellationToken)
         {
-            //var dd = Validate<ResourceObject>(request);
-            Console.WriteLine(request.RequestData);
-            return await Task.FromResult(new { });
+            var resource = new ResourceObject
+            {
+                Name = "Testttt"
+            };
+
+            await dbContext.AddAsync(resource, cancellationToken).ConfigureAwait(false);
+            await dbContext.SaveChangesAsync(cancellationToken);
+            return resource;
         }
     }
 }

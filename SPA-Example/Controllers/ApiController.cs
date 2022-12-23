@@ -36,15 +36,14 @@ namespace SPA_Example.Controllers
         }
 
         [HttpPost("PostImage")]
-        public void PostImage([FromBody] ImageData image)
+        public async Task<IActionResult> PostImage()
         {
-            Console.WriteLine(image.Bytes);
+            var command = new Command
+            {
+                Name = "CreateResource",
+                RequestData = "test"
+            };
+            return Ok(await _commandService.Handle(command));
         }
-    }
-
-    public class ImageData
-    {
-        public string Name { get; set; }
-        public string[] Bytes { get; set; }
     }
 }

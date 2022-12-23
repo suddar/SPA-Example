@@ -15,7 +15,10 @@
 
         public async Task<object?> Handle(CreateSkillRequest request, CancellationToken cancellationToken)
         {
-            return await Task.FromResult(new { });
+            var skill = new Skill { Name = "Test" };
+            await dbContext.AddAsync(skill, cancellationToken);
+            await dbContext.SaveChangesAsync(cancellationToken);
+            return skill;
         }
     }
 }

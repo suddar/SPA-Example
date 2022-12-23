@@ -4,6 +4,17 @@
 }
 
 <form method="post" enctype="multipart/form-data">
-    <input type="file" asp-for="Upload" />
-    <input type="submit" />
+    <div class="mb-3">
+        <label for="file-input" class="form-label">Select a file</label>
+        <input type="file" id="file-input" class="form-control" asp-for="Upload" />
+    </div>
+    <button type="submit" class="btn btn-light">Submit</button>
 </form>
+
+@foreach (var resource in Model.ResourcesList)
+{
+    <div>@resource.Name</div>
+    var base64 = Convert.ToBase64String(resource?.Bytes);
+    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+    <img src="@imgSrc" />
+}

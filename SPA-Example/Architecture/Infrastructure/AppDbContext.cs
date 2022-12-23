@@ -9,6 +9,12 @@ namespace SPA_Example.Architecture.Infrastructure
 
         #region Entities
         public DbSet<ResourceObject> ResourceObjects => Set<ResourceObject>();
+        public DbSet<Course> Courses => Set<Course>();
+        public DbSet<Enrollment> Enrollments => Set<Enrollment>();
+        public DbSet<Grade> Grades => Set<Grade>();
+        public DbSet<Skill> Skills => Set<Skill>();
+        public DbSet<Subject> Subjects => Set<Subject>();
+        public DbSet<Topic> Topic => Set<Topic>();
         #endregion
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
@@ -23,6 +29,7 @@ namespace SPA_Example.Architecture.Infrastructure
                 entity.AddProperty("LastModified", typeof(DateTime));
                 entity.AddProperty("LastModifiedBy", typeof(string));
             }
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
