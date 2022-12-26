@@ -5,6 +5,10 @@ VisualStudioVersion = 17.3.32819.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SPA-Example", "SPA-Example\SPA-Example.csproj", "{5B9550C1-FF05-4D55-937A-3FED3FA5CAE0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{79DFC381-EBA8-490B-8C5F-113FA5622194}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{50D01984-7362-4B5A-9474-04539B15552D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{5B9550C1-FF05-4D55-937A-3FED3FA5CAE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B9550C1-FF05-4D55-937A-3FED3FA5CAE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B9550C1-FF05-4D55-937A-3FED3FA5CAE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79DFC381-EBA8-490B-8C5F-113FA5622194}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79DFC381-EBA8-490B-8C5F-113FA5622194}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79DFC381-EBA8-490B-8C5F-113FA5622194}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79DFC381-EBA8-490B-8C5F-113FA5622194}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50D01984-7362-4B5A-9474-04539B15552D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50D01984-7362-4B5A-9474-04539B15552D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50D01984-7362-4B5A-9474-04539B15552D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50D01984-7362-4B5A-9474-04539B15552D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

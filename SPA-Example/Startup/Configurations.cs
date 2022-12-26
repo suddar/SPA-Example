@@ -47,28 +47,28 @@ namespace SPA_Example.Startup
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
-
+                app.UseSwagger();
+                app.UseSwaggerUI();
             }
-
-            app.UseSwagger();
-            app.UseSwaggerUI();
 
             app.UseStaticFiles();
             app.UseHttpsRedirection();
 
-            app.UseAuthentication();
-            app.UseAuthorization();
+            app.UseRouting();
 
             app.MapControllers();
             app.MapRazorPages();
 
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             #region For ClientApp
-            app.UseStaticFiles(
-                new StaticFileOptions
-                {
-                    FileProvider = new PhysicalFileProvider(Path.Combine(app.Environment.ContentRootPath, "ClientApp/dist")),
-                    RequestPath = "/app"
-                });
+            //app.UseStaticFiles(
+            //    new StaticFileOptions
+            //    {
+            //        FileProvider = new PhysicalFileProvider(Path.Combine(app.Environment.ContentRootPath, "ClientApp/dist")),
+            //        RequestPath = "/app"
+            //    });
 
             // global cors policy
             app.UseCors(x => x

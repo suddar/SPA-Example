@@ -7,12 +7,28 @@ Log.Logger = new LoggerConfiguration()
     .CreateLogger();
 #endregion
 #region Main App
+//var builder = WebApplication.CreateBuilder(args);
+//builder.Services.UseApplicationServices();
+//builder.Services.UseInfrastructureServices(builder.Configuration);
+//builder.Services.UseCommonServices(builder.Configuration);
+
+//var app = builder.Build();
+//app.UseCommonPiplines();
+//app.Run("https://localhost:6060");
+#endregion
+
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.UseApplicationServices();
-builder.Services.UseInfrastructureServices(builder.Configuration);
-builder.Services.UseCommonServices(builder.Configuration);
+
+// Add services to the container.
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
-app.UseCommonPiplines();
-app.Run("https://localhost:6060");
-#endregion
+
+app.UseStaticFiles();
+
+app.UseRouting();
+
+app.MapRazorPages();
+
+app.Run();
+
