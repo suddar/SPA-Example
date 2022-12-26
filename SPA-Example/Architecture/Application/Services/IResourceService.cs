@@ -2,7 +2,8 @@
 {
     public interface IResourceService
     {
-        Task<List<ResourceObject>> GetResourceObjects();
+        Task<List<ResourceObject>> GetResourceObjectsAsync();
         Task SaveAsync(ResourceObject resource);
+        Task SaveAsync(IFormFile file);
     }
 }

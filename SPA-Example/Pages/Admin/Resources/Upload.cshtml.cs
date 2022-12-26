@@ -1,6 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SPA_Example.Architecture.Application.Services;
+using System.ComponentModel.DataAnnotations;
+using System.Drawing;
+using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 
 namespace SPA_Example.Pages.Admin.Resources
 {
@@ -15,12 +19,15 @@ namespace SPA_Example.Pages.Admin.Resources
         }
 
         public List<ResourceObject>? ResourcesList { get; set; }
+
         [BindProperty]
-        public IFormFile? Upload { get; set; }
+        [Required(ErrorMessage = "Please select a file.")]
+        [DataType(DataType.Upload)]
+        public IFormFile? UploadedFile { get; set; }
 
         public async Task OnGet()
         {
-            ResourcesList = await _resourceService.GetResourceObjects();
+            ResourcesList = await _resourceService.GetResourceObjectsAsync();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -29,19 +36,13 @@ namespace SPA_Example.Pages.Admin.Resources
             //using var fileStream = new FileStream(file, FileMode.Create);
             //await Upload.CopyToAsync(fileStream);
 
-            if (Upload == null)
+            if (UploadedFile == null)
                 return new BadRequestResult();
 
-            using MemoryStream ms = new();
-            await Upload.CopyToAsync(ms);
-            var resource = new ResourceObject
-            {
-                Name = Upload.FileName,
-                ContentType = Upload.ContentType,
-                Bytes = ms.ToArray()
-            };
+            if (OperatingSystem.IsWindows())
+                await _resourceService.SaveAsync(UploadedFile);
 
-            await _resourceService.SaveAsync(resource);
+            ResourcesList = await _resourceService.GetResourceObjectsAsync();
             return Page();
         }
     }
