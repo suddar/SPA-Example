@@ -1,6 +1,4 @@
-﻿using Domain.Entities.Abstractions;
-
-namespace Domain.Entities.LearningUnits
+﻿namespace Domain.Entities.LearningUnits
 {
     /// <summary>
     /// Math, Science, Language,...

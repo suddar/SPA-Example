@@ -5,7 +5,7 @@ using Domain.Identity.Authorization;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace SPA_Example.Architecture.Infrastructure
+namespace Infrastructure
 {
     public class AppDbContext : IdentityDbContext<AppUser, AppRole, Guid>
     {

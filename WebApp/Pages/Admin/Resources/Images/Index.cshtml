@@ -1,0 +1,18 @@
+﻿@page
+@model WebApp.Pages.Admin.Resources.IndexModel
+@{
+}
+<nav>
+    <a asp-page="/admin/resources/Images/Upload">Upload</a>
+</nav>
+
+@foreach (var resource in Model.ResourcesList)
+{
+    @if (resource?.Thumbnai != null)
+    {
+                <div>@resource.Name</div>
+        var base64 = Convert.ToBase64String(resource.Thumbnai);
+        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                <img src="@imgSrc" />
+    }
+}

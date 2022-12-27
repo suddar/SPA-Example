@@ -1,0 +1,55 @@
+﻿@page
+@model WebApp.Pages.Admin.Resources.UploadModel
+@{
+    var cardIndex = 0;
+}
+
+<form method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="file-input" class="form-label">Select a file</label>
+        <input type="file" id="file-input" class="form-control" asp-for="UploadedFile" accept=".png, .jpg, .jpeg, .gif" />
+    </div>
+    <button type="submit" class="btn btn-light">Submit</button>
+</form>
+
+<div class="row">
+
+    @if (Model.ResourcesList != null)
+        @foreach (var resource in Model.ResourcesList)
+        {
+            @if (resource?.Thumbnai != null)
+            {
+                var base64 = Convert.ToBase64String(resource.Thumbnai);
+                var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+                var cardId = "resource-card-" + cardIndex;
+
+                <div id="@cardId" class="card" style="width: 12rem; padding:6px; margin-right:6px; margin-bottom:6px" onmouseover="showAlert('@cardId')">
+                    <img class="shadow-sm" src="@imgSrc" />
+                    <div class="card-body">
+                        <h6 class="card-title">@resource.Name</h6>
+                    </div>
+                </div>
+            }
+            cardIndex++;
+        }
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        function showAlert(id) {
+            alert(id);
+        }
+
+                        //$(document).ready(function () {
+                        //    $('.card').on('click', function (evt) {
+                        //        evt.preventDefault();
+                        //        //$.post('', $('form').serialize(), function () {
+                        //        //    alert('Posted using jQuery');
+                        //        //});
+                        //        var a = this;
+                        //        alert(a.);
+                        //    });
+                        //});
+    </script>
+}
+
