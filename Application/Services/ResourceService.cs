@@ -53,5 +53,12 @@ namespace Application.Services
 
             return thumbnaiStream.ToArray();
         }
+
+        public async Task<List<ResourceObject>?> ClearAll()
+        {
+            await _dbContext.ResourceObjects.ForEachAsync(resource => _dbContext.Remove(resource));
+            await _dbContext.SaveChangesAsync();
+            return await _dbContext.ResourceObjects.ToListAsync();
+        }
     }
 }

@@ -2,6 +2,7 @@
 using Domain.Commands;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApp.Controllers
 {
@@ -33,17 +34,6 @@ namespace WebApp.Controllers
             if (string.IsNullOrEmpty(command.RequestData?.ToString()))
                 return BadRequest();
 
-            return Ok(await _commandService.Handle(command));
-        }
-
-        [HttpPost("PostImage")]
-        public async Task<IActionResult> PostImage()
-        {
-            var command = new Command
-            {
-                Name = "CreateResource",
-                RequestData = "test"
-            };
             return Ok(await _commandService.Handle(command));
         }
     }
