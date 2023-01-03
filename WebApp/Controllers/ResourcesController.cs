@@ -14,20 +14,20 @@ namespace WebApp.Controllers
             _resourceService = resourceService;
         }
 
-        [HttpGet("ClearResources")]
+        [HttpGet("ClearAll")]
         public async Task<ActionResult<List<ResourceObject>>> ClearAll()
         {
             return Ok(await _resourceService.ClearAll());
         }
 
-        [HttpGet("Resources")]
+        [HttpGet("GetResources")]
         public async Task<ActionResult<List<ResourceObject>>> GetResources()
         {
             return Ok(await _resourceService.GetResourceObjectsAsync());
         }
 
-        [HttpPost("Resources")]
-        public async Task<IActionResult> Resources([FromForm] Resource resource)
+        [HttpGet("Upload")]
+        public async Task<IActionResult> PostResources([FromForm] Resource resource)
         {
             if (resource.File == null)
                 return new BadRequestResult();
