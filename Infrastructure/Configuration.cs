@@ -13,13 +13,18 @@ namespace Infrastructure
         {
             // For AppDbContext
             var connectionString = configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
-            // For Identity
-            services
-                .AddIdentity<AppUser, AppRole>()
-                .AddEntityFrameworkStores<AppDbContext>()
-                .AddDefaultTokenProviders();
+            if (connectionString != null)
+            {
+                services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString, b => b.MigrationsAssembly("WebApp")));
+
+                // For Identity
+                services
+                    .AddIdentity<AppUser, AppRole>()
+                    .AddEntityFrameworkStores<AppDbContext>()
+                    .AddDefaultTokenProviders();
+            }
+            else throw new NullReferenceException();
         }
     }
 }

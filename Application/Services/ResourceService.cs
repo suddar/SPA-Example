@@ -1,15 +1,22 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using System.ComponentModel.Design;
 using System.Drawing;
+using System.IO;
 using System.Runtime.Versioning;
 
 namespace Application.Services
 {
     public class ResourceService : IResourceService
     {
-        readonly AppDbContext _dbContext;
-        public ResourceService(AppDbContext dbContext) { _dbContext = dbContext; }
-
+        private readonly AppDbContext _dbContext;
+        private readonly IWebHostEnvironment _environment;
+        public ResourceService(AppDbContext dbContext, IWebHostEnvironment environment)
+        {
+            _dbContext = dbContext;
+            _environment = environment;
+        }
 
         public async Task<List<ResourceObject>> GetResourceObjectsAsync()
         {
@@ -25,24 +32,35 @@ namespace Application.Services
         [SupportedOSPlatform("windows")]
         public async Task SaveAsync(IFormFile file)
         {
-            if (file == null) throw new ArgumentNullException();
+            if (file == null) throw new NullReferenceException();
 
             using MemoryStream ms = new();
             await file.CopyToAsync(ms);
+
+            var fileName = Guid.NewGuid().ToString() + ".jpg";
+            var imagePath = Path.Combine(_environment.WebRootPath, "images", fileName);
+
+            var directory = Path.GetDirectoryName(imagePath);
+            if (directory != null && !Directory.Exists(directory))
+                Directory.CreateDirectory(directory);
+
+            using var stream = new FileStream(imagePath, FileMode.Create);
+            await file.CopyToAsync(stream);
 
             var resource = new ResourceObject
             {
                 Name = file.FileName,
                 ContentType = file.ContentType,
-                Thumbnai = GenerateImage(ms),
-                Bytes = ms.ToArray()
+                Thumbnai = GenerateThumbnaiImage(ms),
+                //Data = ms.ToArray(),
+                FilePath = "/images/" + fileName,
             };
 
             await SaveAsync(resource);
         }
 
         [SupportedOSPlatform("windows")]
-        private static byte[] GenerateImage(MemoryStream ms)
+        private static byte[] GenerateThumbnaiImage(MemoryStream ms)
         {
             Image image = Image.FromStream(ms);
             var thumbnaiImage = image.GetThumbnailImage(120, 120, () => false, IntPtr.Zero);

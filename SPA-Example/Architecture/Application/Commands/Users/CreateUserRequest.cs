@@ -33,6 +33,7 @@ namespace SPA_Example.Architecture.Application.Commands
                 UserName = requestData.UserName,
                 Email = requestData.UserName,
             };
+            if (requestData.Password == null) return default;
 
             IdentityResult result = await _userManager.CreateAsync(newUser, requestData.Password);
             if (!result.Succeeded)

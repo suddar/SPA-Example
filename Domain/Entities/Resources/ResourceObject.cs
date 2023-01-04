@@ -2,8 +2,11 @@
 {
     public class ResourceObject : BaseEntity
     {
+        public string? FileName { get; set; }
+        public string? FilePath { get; set; }
+
         public string? ContentType { get; set; }
         public byte[]? Thumbnai { get; set; }
-        public byte[]? Bytes { get; set; }
+        public byte[]? Data { get; set; }
     }
 }
