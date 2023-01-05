@@ -1,6 +1,6 @@
 <script>
     import { onMount } from "svelte";
-    import { readable } from "svelte/store";
+    import ImageModal from "../../components/image-modal.svelte";
 
     var hostName = "https://localhost:6060";
     let images = [];
@@ -14,15 +14,34 @@
         images = await response.json();
         console.log(images[0].filePath);
     });
+
+    function openImage(imageSrc) {
+        // Tạo một element img mới
+        const imgElement = new Image();
+
+        // Sử dụng phương thức `src` để tải hình ảnh vào element
+        imgElement.src = imageSrc;
+
+        // Mở hình ảnh dưới dạng pop-up khi hình ảnh đã được tải xong
+        imgElement.onload = () => {
+            window.open(imgElement.src);
+        };
+    }
 </script>
 
 {#each images as image}
-    <p>image</p>
-    <img
-        src={"data:image/png;base64," + image.thumbnai}
-        alt={image.description}
+    <!-- <div on:mouseup={() => openImage(hostName + image.filePath)}>
+        <img
+            src={"data:image/png;base64," + image.thumbnai}
+            alt={image.description}
+        />
+    </div> -->
+    <!-- Sử dụng smallImageData thay vì smallImageUrl -->
+    <ImageModal
+        smallImageData={image.thumbnai}
+        largeImageUrl={hostName + image.filePath}
     />
-    <img src={hostName + image.filePath} alt="" />
+    <!-- <img src={hostName + image.filePath} alt="" /> -->
 {/each}
 
 <style>
