@@ -1,4 +1,4 @@
-using Application;
+﻿using Application;
 using Infrastructure;
 
 #region Serilog setup

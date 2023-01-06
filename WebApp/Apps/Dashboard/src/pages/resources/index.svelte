@@ -2,6 +2,10 @@
     import { onMount } from "svelte";
     import ImageModal from "../../components/image-modal.svelte";
 
+    import { inject } from 'svelte';
+
+    const myValue = inject('myValue');
+
     var hostName = "https://localhost:6060";
     let images = [];
 
@@ -12,7 +16,8 @@
         );
 
         images = await response.json();
-        console.log(images[0].filePath);
+        //console.log(images[0].filePath);
+        console.log(myValue);
     });
 
     function openImage(imageSrc) {
@@ -38,6 +43,7 @@
     </div> -->
     <!-- Sử dụng smallImageData thay vì smallImageUrl -->
     <ImageModal
+        imageObject="image"
         smallImageData={image.thumbnai}
         largeImageUrl={hostName + image.filePath}
     />

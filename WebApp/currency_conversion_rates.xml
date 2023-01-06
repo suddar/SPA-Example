@@ -1,0 +1,20 @@
+<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+  <env:Body>
+    <wd:Import_Currency_Conversion_Rates_Request version="v39.1" xmlns:wd="urn:com.workday/bsvc">
+      <wd:Calculate_Inverse_Rate>true</wd:Calculate_Inverse_Rate>
+      <wd:Currency_Conversion_Rate_Data>
+        <wd:Effective_Timestamp>2022-12-26T21:54:16</wd:Effective_Timestamp>
+        <wd:From_Currency_Reference>
+          <wd:ID type="Currency_ID">USD</wd:ID>
+        </wd:From_Currency_Reference>
+        <wd:Target_Currency_Reference>
+          <wd:ID type="Currency_ID">INR</wd:ID>
+        </wd:Target_Currency_Reference>
+        <wd:Currency_Rate_Type_Reference>
+          <wd:ID type="Currency_Rate_Type_ID">Average</wd:ID>
+        </wd:Currency_Rate_Type_Reference>
+        <wd:Currency_Rate>80</wd:Currency_Rate>
+      </wd:Currency_Conversion_Rate_Data>
+    </wd:Import_Currency_Conversion_Rates_Request>
+  </env:Body>
+</env:Envelope>

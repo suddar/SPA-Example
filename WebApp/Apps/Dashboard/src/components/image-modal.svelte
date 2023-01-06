@@ -1,10 +1,15 @@
 <script>
+    export let imageObject = null;
     // Định nghĩa các thuộc tính của component
     export let largeImageUrl = "";
     export let smallImageData = "";
     export let smallImageUrl = `data:image/jpeg;base64,${smallImageData}`;
 
-    let isModalOpen = false; // Biến để kiểm tra modal có đang mở hay không
+    let isModalOpen = false;
+    let isEditPopupOpen = false;
+
+    let newImageName = null;
+    let newImageFile = null;
 
     // Hàm này sẽ được gọi khi người dùng bấm vào hình ảnh nhỏ
     function handleClick() {
@@ -20,29 +25,22 @@
 
     // Thêm phần tử input vào hàm xử lý sự kiện -->
     function handleEdit() {
-        const input = document.createElement("input");
-        input.type = "file";
-        input.accept = "image/*";
-        input.click();
-        input.onchange = () => {
-            const file = input.files[0];
-            if (file) {
-                // Tải file lên API
-                uploadFile(file)
-                    .then(() => {
-                        // Hiển thị thông báo tải thành công
-                        alert("Hiển thị thông báo tải thành công");
-                    })
-                    .catch(() => {
-                        // Hiển thị thông báo tải thất bại
-                        alert("Hiển thị thông báo tải thất bại");
-                    });
-            }
-        };
+        isModalOpen = false;
+        isEditPopupOpen = true;
     }
 
     function handleDelete() {
         // Thực hiện các hành động cần thiết khi người dùng bấm vào nút xóa
+        isModalOpen = false;
+    }
+
+    // Thêm hàm xử lý sự kiện
+    function handleCancel() {
+        isEditPopupOpen = false;
+    }
+
+    function handleSave() {
+        
     }
 </script>
 
@@ -51,7 +49,8 @@
 
 <!-- Thay đổi phần hiển thị của modal -->
 {#if isModalOpen}
-    <div class="modal-overlay" on:mouseup={handleClose}>
+    <div>
+        <div class="modal-overlay" on:mouseup={handleClose}/>
         <div class="modal-content">
             <div class="image-container">
                 <img src={largeImageUrl} alt="" />
@@ -65,6 +64,26 @@
     </div>
 {/if}
 
+<!-- Thay đổi phần hiển thị -->
+{#if isEditPopupOpen}
+    <!-- Thay đổi phần hiển thị của pop-up -->
+    <div class="edit-popup">
+        <h2>Chỉnh sửa ảnh</h2>
+        <p>Tên hiện tại: {imageObject.fileName}</p>
+        <label for="image-name">Tên mới:</label>
+        <input type="text" id="image-name" bind:value={newImageName} />
+        <label for="image-file">File:</label>
+        <input
+            type="file"
+            id="image-file"
+            accept="image/*"
+            bind:value={newImageFile}
+        />
+        <button on:click={handleSave}>Lưu</button>
+        <button on:click={handleCancel}>Hủy</button>
+    </div>
+{/if}
+
 <style>
     /* Định dạng modal */
     .modal-overlay {
@@ -74,7 +93,7 @@
         width: 100%;
         height: 100%;
         background-color: rgba(0, 0, 0, 0.5);
-        z-index: 10;
+        z-index: 1;
     }
     .modal-content {
         position: absolute;
@@ -83,6 +102,7 @@
         transform: translate(-50%, -50%);
         background-color: white;
         padding: 10px;
+        z-index: 2;
     }
     /* Sửa lại định dạng modal */
     .image-container {
