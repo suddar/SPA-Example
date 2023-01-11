@@ -1,10 +1,9 @@
 ﻿using Application;
 using Infrastructure;
-
-#region Serilog setup
 using Serilog;
 using WebApp.Setup;
 
+#region Serilog setup
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .WriteTo.File("logs/mylogs.txt", rollingInterval: RollingInterval.Day)

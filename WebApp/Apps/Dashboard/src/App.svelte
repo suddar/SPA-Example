@@ -1,11 +1,10 @@
 <script>
   import { Router } from "@roxi/routify";
   import { routes } from "../.routify/routes";
-
-  import { provide } from "svelte";
-  const myValue = "Hello, World!";
-  provide("myValue", myValue);
-
 </script>
+
+<svelte:head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+</svelte:head>
 
 <Router {routes} />
