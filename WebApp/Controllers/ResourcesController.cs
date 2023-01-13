@@ -26,20 +26,28 @@ namespace WebApp.Controllers
             return Ok(await _resourceService.GetResourceObjectsAsync());
         }
 
-        [HttpGet("Upload")]
-        public async Task<IActionResult> PostResources([FromForm] Resource resource)
+        [HttpPost("Upload")]
+        public async Task<IActionResult> PostResources([FromForm] ResourceObject resource)
         {
-            if (resource.File == null)
+            if (resource == null)
                 return new BadRequestResult();
 
-            await _resourceService.SaveAsync(resource.File);
-            return Ok("Done");
+            await _resourceService.SaveAsync(resource);
+            return Ok("Uploaded");
         }
-    }
 
-    public class Resource
-    {
-        public IFormFile? File { get; set; }
-        public string? Name { get; set; }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> EditResource(int id, [FromBody] ResourceObject value)
+        {
+            await _resourceService.Update(id, value);
+            return Ok("Updated");
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            _resourceService.Delete(id);
+            return Ok("Deleted");
+        }
     }
 }

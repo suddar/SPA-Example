@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
-using System.ComponentModel.Design;
 using System.Drawing;
-using System.IO;
 using System.Runtime.Versioning;
 
 namespace Application.Services
@@ -77,6 +74,25 @@ namespace Application.Services
             await _dbContext.ResourceObjects.ForEachAsync(resource => _dbContext.Remove(resource));
             await _dbContext.SaveChangesAsync();
             return await _dbContext.ResourceObjects.ToListAsync();
+        }
+
+        public async Task<bool> Delete(int id)
+        {
+            var resource = await _dbContext.FindAsync<ResourceObject>(id);
+            if (resource == null) return false;
+
+            _dbContext.Remove(resource);
+            return true;
+        }
+
+        public async Task<bool> Update(int id, ResourceObject updateData)
+        {
+            var resource = await _dbContext.FindAsync<ResourceObject>(id);
+            if (resource == null) return false;
+
+            resource.CopyFrom(updateData);
+            await _dbContext.SaveChangesAsync();
+            return true;
         }
     }
 }
