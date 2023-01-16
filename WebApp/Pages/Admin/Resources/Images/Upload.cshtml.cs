@@ -39,7 +39,7 @@ namespace WebApp.Pages.Admin.Resources
                 return new BadRequestResult();
 
             if (OperatingSystem.IsWindows())
-                await _resourceService.SaveAsync(UploadedFile);
+                await _resourceService.UploadAsync(UploadedFile);
 
             ResourcesList = await _resourceService.GetResourceObjectsAsync();
             return Page();

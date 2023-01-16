@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 
 namespace WebApp.Controllers
@@ -32,14 +33,14 @@ namespace WebApp.Controllers
             if (resource == null)
                 return new BadRequestResult();
 
-            await _resourceService.SaveAsync(resource);
+            await _resourceService.SaveToDatabaseAsync(resource);
             return Ok("Uploaded");
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> EditResource(int id, [FromBody] ResourceObject value)
         {
-            await _resourceService.Update(id, value);
+            //await _resourceService.Update(id, value);
             return Ok("Updated");
         }
 
@@ -48,6 +49,14 @@ namespace WebApp.Controllers
         {
             _resourceService.Delete(id);
             return Ok("Deleted");
+        }
+
+        [HttpPost("Edit/{id}")]
+        public IActionResult EResources([FromForm] IFormFile file)
+        {
+            Console.WriteLine("edit");
+            Console.WriteLine(JsonConvert.SerializeObject(file));
+            return Ok("Uploaded");
         }
     }
 }

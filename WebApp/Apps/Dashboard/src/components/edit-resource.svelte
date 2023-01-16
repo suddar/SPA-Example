@@ -9,33 +9,57 @@
 
   import axios from "axios";
 
-  export let resourceId;
+  export let resourceId = 1;
   export let isShow = false;
   export let resourceName;
   let newImageFile;
 
+  var hostName = "https://localhost:6060";
+
   async function handleSave() {
-    const response = await fetch(`${hostName}/api/Resources/${resourceId}`);
+    //const response = await fetch(`${hostName}/api/Resources/${resourceId}`);
 
     var data = {
-      fileName: null,
-      filePath: "/images/b69127a3-d0ed-4344-9978-55a6189e3ccf.jpg",
-      contentType: "image/jpeg",
-      thumbnai: "",
+      fileName: "test",
       data: newImageFile,
-      id: 8,
-      name: "1.jpg",
     };
 
+    const formData = new FormData();
+    formData.append("file", newImageFile);
+
     axios
-      .put("/api/user", {
-        name: "Jane",
+      .post(`${hostName}/api/Resources/edit/${resourceId}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       })
       .then((response) => {
-        // Update the user object with the new name
-        user.name = response.data.name;
-        console.log(user); // {name: "Jane", age: 30}
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
       });
+
+    // axios
+    //   .put(`${hostName}/api/Resources/${resourceId}`, data)
+    //   .then((response) => {
+    //     console.log(response);
+    //   });
+
+    // axios({
+    //   method: "post",
+    //   url: "myurl",
+    //   data: bodyFormData,
+    //   headers: { "Content-Type": "multipart/form-data" },
+    // })
+    //   .then(function (response) {
+    //     //handle success
+    //     console.log(response);
+    //   })
+    //   .catch(function (response) {
+    //     //handle error
+    //     console.log(response);
+    //   });
   }
 </script>
 
