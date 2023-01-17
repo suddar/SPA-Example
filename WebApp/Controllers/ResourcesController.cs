@@ -40,7 +40,7 @@ namespace WebApp.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> EditResource(int id, [FromBody] ResourceObject value)
         {
-            //await _resourceService.Update(id, value);
+            await _resourceService.Update(id, value);
             return Ok("Updated");
         }
 

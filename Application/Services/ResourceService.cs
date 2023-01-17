@@ -7,13 +7,17 @@ namespace Application.Services
 {
     public class ResourceService : IResourceService
     {
+        #region Variable Declaration
         private readonly AppDbContext _dbContext;
+        private readonly IFileService _fileService;
         private readonly IWebHostEnvironment _environment;
-        public ResourceService(AppDbContext dbContext, IWebHostEnvironment environment)
+        public ResourceService(AppDbContext dbContext, IWebHostEnvironment environment, IFileService fileService)
         {
             _dbContext = dbContext;
             _environment = environment;
+            _fileService = fileService;
         }
+        #endregion
 
         #region API public methods
         public async Task<List<ResourceObject>?> ClearAll()
@@ -30,9 +34,10 @@ namespace Application.Services
 
         public async Task<bool> Delete(int id)
         {
-            var resource = await _dbContext.FindAsync<ResourceObject>(id);
-            if (resource == null) return false;
+            ResourceObject? resource = await _dbContext.FindAsync<ResourceObject>(id);
+            if (resource == null || resource.FilePath == null) return false;
 
+            _fileService.DeleteFile(resource.FilePath);
             _dbContext.Remove(resource);
             return true;
         }
@@ -45,6 +50,36 @@ namespace Application.Services
             resource.CopyFrom(updateData);
             await _dbContext.SaveChangesAsync();
             return true;
+        }
+
+        [SupportedOSPlatform("windows")]
+        public async Task UploadAsync(IFormFile file)
+        {
+            if (file == null) throw new NullReferenceException();
+
+            var fileName = Guid.NewGuid().ToString() + ".jpg";
+            var filePath = Path.Combine(_environment.WebRootPath, "images", fileName);
+            await _fileService.SaveFileAsync(file, filePath);
+
+            using MemoryStream ms = new();
+            await file.CopyToAsync(ms);
+
+            var resource = new ResourceObject
+            {
+                Name = file.FileName,
+                ContentType = file.ContentType,
+                Thumbnai = GenerateThumbnaiImage(ms),
+                //Data = ms.ToArray(),
+                FilePath = "/images/" + fileName,
+            };
+
+            await SaveToDatabaseAsync(resource);
+        }
+
+        public async Task SaveToDatabaseAsync(ResourceObject resource)
+        {
+            await _dbContext.AddAsync(resource);
+            await _dbContext.SaveChangesAsync();
         }
         #endregion
 
@@ -62,43 +97,5 @@ namespace Application.Services
             return thumbnaiStream.ToArray();
         }
         #endregion
-
-        [SupportedOSPlatform("windows")]
-        public async Task UploadAsync(IFormFile file)
-        {
-            if (file == null) throw new NullReferenceException();
-
-            using MemoryStream ms = new();
-            await file.CopyToAsync(ms);
-
-            var fileName = Guid.NewGuid().ToString() + ".jpg";
-            var imagePath = Path.Combine(_environment.WebRootPath, "images", fileName);
-
-            var directory = Path.GetDirectoryName(imagePath);
-            if (directory != null && !Directory.Exists(directory))
-                Directory.CreateDirectory(directory);
-
-            using var stream = new FileStream(imagePath, FileMode.Create);
-            await file.CopyToAsync(stream);
-
-            var resource = new ResourceObject
-            {
-                Name = file.FileName,
-                ContentType = file.ContentType,
-                Thumbnai = GenerateThumbnaiImage(ms),
-                //Data = ms.ToArray(),
-                FilePath = "/images/" + fileName,
-            };
-
-            //await SaveFileAsync();
-            await SaveToDatabaseAsync(resource);
-        }
-
-        public async Task SaveToDatabaseAsync(ResourceObject resource)
-        {
-            await _dbContext.AddAsync(resource);
-            await _dbContext.SaveChangesAsync();
-        }
-
     }
 }
