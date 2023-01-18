@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.ComponentModel.DataAnnotations;
 
 namespace WebApp.Controllers
 {
@@ -9,8 +7,8 @@ namespace WebApp.Controllers
     [ApiController]
     public class ResourcesController : ControllerBase
     {
-        private readonly IResourceService _resourceService;
-        public ResourcesController(IResourceService resourceService)
+        private readonly IOldResourceService _resourceService;
+        public ResourcesController(IOldResourceService resourceService)
         {
             _resourceService = resourceService;
         }

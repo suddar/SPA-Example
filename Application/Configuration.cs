@@ -14,6 +14,8 @@ namespace Application
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
             services.AddScoped<ICommandService, CommandService>();
+            services.AddScoped<IOldResourceService, OldResourceService>();
+
             services.AddScoped<IResourceService, ResourceService>();
         }
 

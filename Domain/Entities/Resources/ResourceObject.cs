@@ -8,5 +8,8 @@
         public string? ContentType { get; set; }
         public byte[]? Thumbnai { get; set; }
         public byte[]? Data { get; set; }
+
+        public string? FileType { get; set; }
+        public string? WebRootPath { get; set; }
     }
 }

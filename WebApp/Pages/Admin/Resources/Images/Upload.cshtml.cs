@@ -8,9 +8,9 @@ namespace WebApp.Pages.Admin.Resources
 {
     public class UploadModel : PageModel
     {
-        private readonly IResourceService _resourceService;
+        private readonly IOldResourceService _resourceService;
         private readonly IWebHostEnvironment _environment;
-        public UploadModel(IResourceService resourceService, IWebHostEnvironment environment)
+        public UploadModel(IOldResourceService resourceService, IWebHostEnvironment environment)
         {
             _environment = environment;
             _resourceService = resourceService;

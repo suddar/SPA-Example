@@ -7,9 +7,9 @@ namespace WebApp.Pages.Admin.Resources
     public class IndexModel : PageModel
     {
         public List<ResourceObject> ResourcesList { get; set; }
-        private readonly IResourceService _resourceService;
+        private readonly IOldResourceService _resourceService;
 
-        public IndexModel(IResourceService resourceService)
+        public IndexModel(IOldResourceService resourceService)
         {
             ResourcesList = new();
             _resourceService = resourceService;

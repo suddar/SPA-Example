@@ -1,101 +1,74 @@
 ﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
-using System.Drawing;
-using System.Runtime.Versioning;
 
 namespace Application.Services
 {
     public class ResourceService : IResourceService
     {
-        #region Variable Declaration
+        private readonly string _webRootPath;
         private readonly AppDbContext _dbContext;
-        private readonly IFileService _fileService;
-        private readonly IWebHostEnvironment _environment;
-        public ResourceService(AppDbContext dbContext, IWebHostEnvironment environment, IFileService fileService)
-        {
-            _dbContext = dbContext;
-            _environment = environment;
-            _fileService = fileService;
-        }
-        #endregion
 
-        #region API public methods
-        public async Task<List<ResourceObject>?> ClearAll()
+        public ResourceService(IWebHostEnvironment env, AppDbContext context)
         {
-            await _dbContext.ResourceObjects.ForEachAsync(resource => _dbContext.Remove(resource));
-            await _dbContext.SaveChangesAsync();
-            return await _dbContext.ResourceObjects.ToListAsync();
+            _webRootPath = env.WebRootPath;
+            _dbContext = context;
         }
 
-        public async Task<List<ResourceObject>> GetResourceObjectsAsync()
+        public async Task<int> UploadResource(IFormFile file)
         {
-            return await _dbContext.ResourceObjects.ToListAsync();
-        }
-
-        public async Task<bool> Delete(int id)
-        {
-            ResourceObject? resource = await _dbContext.FindAsync<ResourceObject>(id);
-            if (resource == null || resource.FilePath == null) return false;
-
-            _fileService.DeleteFile(resource.FilePath);
-            _dbContext.Remove(resource);
-            return true;
-        }
-
-        public async Task<bool> Update(int id, ResourceObject updateData)
-        {
-            var resource = await _dbContext.FindAsync<ResourceObject>(id);
-            if (resource == null) return false;
-
-            resource.CopyFrom(updateData);
-            await _dbContext.SaveChangesAsync();
-            return true;
-        }
-
-        [SupportedOSPlatform("windows")]
-        public async Task UploadAsync(IFormFile file)
-        {
-            if (file == null) throw new NullReferenceException();
-
-            var fileName = Guid.NewGuid().ToString() + ".jpg";
-            var filePath = Path.Combine(_environment.WebRootPath, "images", fileName);
-            await _fileService.SaveFileAsync(file, filePath);
-
-            using MemoryStream ms = new();
-            await file.CopyToAsync(ms);
-
             var resource = new ResourceObject
             {
-                Name = file.FileName,
-                ContentType = file.ContentType,
-                Thumbnai = GenerateThumbnaiImage(ms),
-                //Data = ms.ToArray(),
-                FilePath = "/images/" + fileName,
+                FileName = file.FileName,
+                FileType = GetFileType(file.FileName)
             };
 
-            await SaveToDatabaseAsync(resource);
+            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+            var filePath = Path.Combine(_webRootPath, "resources", resource.FileType, fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            resource.FilePath = filePath;
+            _dbContext.ResourceObjects.Add(resource);
+            _dbContext.SaveChanges();
+            return resource.Id;
         }
 
-        public async Task SaveToDatabaseAsync(ResourceObject resource)
+        public void DeleteResource(int id)
         {
-            await _dbContext.AddAsync(resource);
-            await _dbContext.SaveChangesAsync();
+            var resource = _dbContext.ResourceObjects.Find(id);
+            if (resource != null)
+            {
+                var filePath = resource.FilePath;
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                }
+                _dbContext.ResourceObjects.Remove(resource);
+                _dbContext.SaveChanges();
+            }
         }
-        #endregion
 
-        #region Private methods
-        [SupportedOSPlatform("windows")]
-        private static byte[] GenerateThumbnaiImage(MemoryStream ms)
+        private string GetFileType(string fileName)
         {
-            Image image = Image.FromStream(ms);
-            var thumbnaiImage = image.GetThumbnailImage(120, 120, () => false, IntPtr.Zero);
-
-            using var thumbnaiStream = new MemoryStream();
-            thumbnaiImage.Save(thumbnaiStream, System.Drawing.Imaging.ImageFormat.Jpeg);
-            thumbnaiImage.Dispose();
-
-            return thumbnaiStream.ToArray();
+            var extension = Path.GetExtension(fileName).ToLower();
+            if (extension == ".jpg" || extension == ".jpeg" || extension == ".png")
+            {
+                return "images";
+            }
+            else if (extension == ".mp4" || extension == ".avi")
+            {
+                return "videos";
+            }
+            else if (extension == ".mp3" || extension == ".wav")
+            {
+                return "audios";
+            }
+            else
+            {
+                throw new Exception("Invalid file type.");
+            }
         }
-        #endregion
     }
 }
