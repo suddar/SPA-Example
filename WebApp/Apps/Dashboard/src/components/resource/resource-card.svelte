@@ -1,9 +1,9 @@
 <script>
   export let onEdit;
   export let onDelete;
-  export let model;
+  export let data;
 
-  let thumbnai = `data:image/jpeg;base64,${model}`;
+  let thumbnail = `data:image/jpeg;base64,${data}`;
   let showButtons = false;
 </script>
 
@@ -12,7 +12,7 @@
   on:mouseenter={() => (showButtons = true)}
   on:mouseleave={() => (showButtons = false)}
 >
-  <img src={thumbnai} alt="" style="position: relative;" />
+  <img src={thumbnail} alt="" style="position: relative;" />
   {#if showButtons}
     <div class="button-group">
       <button on:click={onEdit}>Edit</button>

@@ -1,6 +1,6 @@
 <script>
-  import ModalContent from "./modal/modal-content.svelte";
-  import ModalOverlay from "./modal/modal-overlay.svelte";
+  import ModalContent from "../modal/modal-content.svelte";
+  import ModalOverlay from "../modal/modal-overlay.svelte";
 
   let isOpen = true;
   let newImageFile;

@@ -31,8 +31,7 @@ namespace WebApp.Controllers
         public IActionResult DownloadFile(string fileName)
         {
             // Lấy đường dẫn tuyệt đối của tệp
-            var filePath = Path.Combine(
-                            Directory.GetCurrentDirectory(), "wwwroot", fileName);
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", fileName);
 
             // Trả về URL của tệp
             return PhysicalFile(filePath, "application/octet-stream");

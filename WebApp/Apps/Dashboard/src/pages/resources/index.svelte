@@ -1,7 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import EditResource from "../../components/edit-resource.svelte";
-  import ResourceCard from "../../components/resource-card.svelte";
+  import ResourceManager from "../../components/resource/resource-manager.svelte";
 
   var hostName = "https://localhost:6060";
   let images = [];
@@ -11,22 +10,9 @@
     images = await response.json();
     console.log(images[0]);
   });
-
-  var showEdit = false;
-  var currentImageData = {};
 </script>
 
-{#each images as imageData}
-  <ResourceCard
-    model={imageData.thumbnai}
-    onEdit={() => {
-      showEdit = true;
-      currentImageData = imageData;
-    }}
-  />
-{/each}
-
-<EditResource bind:isShow={showEdit} resourceName={currentImageData.name} />
+<ResourceManager imageList={images} />
 
 <!-- {
   "fileName": null,
