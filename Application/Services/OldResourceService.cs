@@ -67,8 +67,8 @@ namespace Application.Services
             var resource = new ResourceObject
             {
                 Name = file.FileName,
-                ContentType = file.ContentType,
-                Thumbnai = GenerateThumbnaiImage(ms),
+                FileType = file.ContentType,
+                //Thumbnai = GenerateThumbnaiImage(ms),
                 //Data = ms.ToArray(),
                 FilePath = "/images/" + fileName,
             };

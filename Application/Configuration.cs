@@ -17,6 +17,7 @@ namespace Application
             services.AddScoped<IFileService, FileService>();
             services.AddScoped<IOldResourceService, OldResourceService>();
             services.AddScoped<IResourceService, ResourceService>();
+            services.AddScoped<IThumbnailService, ThumbnailService>();
         }
 
         private static void AddJWTs(this IServiceCollection services)

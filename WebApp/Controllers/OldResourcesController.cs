@@ -5,10 +5,10 @@ namespace WebApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ResourcesController : ControllerBase
+    public class OldResourcesController : ControllerBase
     {
         private readonly IOldResourceService _resourceService;
-        public ResourcesController(IOldResourceService resourceService)
+        public OldResourcesController(IOldResourceService resourceService)
         {
             _resourceService = resourceService;
         }

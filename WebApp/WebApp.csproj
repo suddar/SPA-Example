@@ -48,8 +48,6 @@
   <ItemGroup>
     <Folder Include="Apps\Dashboard\" />
     <Folder Include="Apps\EduApp\" />
-    <Folder Include="Pages\Admin\Resources\Audios\" />
-    <Folder Include="Pages\Admin\Resources\Videos\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 

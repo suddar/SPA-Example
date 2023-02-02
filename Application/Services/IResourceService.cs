@@ -3,6 +3,8 @@
     public interface IResourceService
     {
         void DeleteResource(int id);
-        Task<int> UploadResource(IFormFile file);
+        Task<IEnumerable<ResourceObject>> GetResources(int page, int count);
+        Task UpdateResource(int id, IFormFile file);
+        Task<int> UploadResourceAsync(IFormFile file);
     }
 }

@@ -1,11 +1,4 @@
 ﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
-using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Services
 {
@@ -29,6 +22,14 @@ namespace Application.Services
 
             using var stream = new FileStream(path, FileMode.Create);
             await file.CopyToAsync(stream);
+        }
+
+        public void SaveFile(MemoryStream ms, string path)
+        {
+            FileStream file = new(path, FileMode.Create, FileAccess.Write);
+            ms.WriteTo(file);
+            file.Close();
+            ms.Close();
         }
 
         public void DeleteFile(string filePath)
