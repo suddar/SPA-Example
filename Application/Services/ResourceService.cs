@@ -24,6 +24,7 @@ namespace Application.Services
 
         #region Public methods
         #region Create
+        // TODO change later
         [SupportedOSPlatform("windows")]
         public async Task<int> UploadResourceAsync(IFormFile file)
         {
@@ -31,14 +32,14 @@ namespace Application.Services
 
             // save uploaded file
             var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-            var filePath = Path.Combine(_webRootPath, "resources", fileType, fileName);
-            await _fileService.SaveFileAsync(file, filePath);
+            var filePath = Path.Combine("resources", fileType, fileName);
+            await _fileService.SaveFileAsync(file, Path.Combine(_webRootPath, filePath));
 
             // save thumbnail
             var thumbnailName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-            var thumbnailPath = Path.Combine(_webRootPath, "resources", fileType, thumbnailName);
-            var thumbnailStream = await _thumbnailService.GenerateImage(file, 120, 120);
-            _fileService.SaveFile(thumbnailStream, thumbnailPath);
+            var thumbnailPath = Path.Combine("resources", fileType, thumbnailName);
+            var thumbnailData = await _thumbnailService.GenerateImage(file, 120, 120);
+            await _fileService.SaveFileAsync(thumbnailData, Path.Combine(_webRootPath, thumbnailPath));
 
             // create and save new ResourceObject
             var resource = new ResourceObject
@@ -56,7 +57,7 @@ namespace Application.Services
         #endregion
 
         #region Read
-        public async Task<IEnumerable<ResourceObject>> GetResources(int page, int count)
+        public async Task<IEnumerable<ResourceObject>> GetResourcesAsync(int page, int count)
         {
             return await _dbContext.ResourceObjects
                 .Skip((page - 1) * count)

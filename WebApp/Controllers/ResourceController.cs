@@ -14,20 +14,32 @@ namespace WebApp.Controllers
             _resourceService = resourceService;
         }
 
+        // create 
         [HttpPost]
-        public async Task<IActionResult> UploadResource([FromForm] IFormFile file)
+        public async Task<IActionResult> UploadResource([FromForm]List<IFormFile> files)
         {
-            var resourceId = await _resourceService.UploadResourceAsync(file);
-            return Ok(resourceId);
+            foreach (var item in files)
+                await _resourceService.UploadResourceAsync(item);
+
+            return Ok();
         }
 
-        [HttpPost("{page}")]
-        public async Task<IActionResult> GetResource([FromForm] IFormFile file)
+        // read
+        [HttpGet()]
+        public async Task<IActionResult> GetResource(int pageIndex, int size)
         {
-            var resourceId = await _resourceService.UploadResourceAsync(file);
-            return Ok(resourceId);
+            var resources = await _resourceService.GetResourcesAsync(pageIndex, size);
+            return Ok(resources);
         }
 
+        [HttpPut()]
+        public async Task<IActionResult> UpdateResource([FromForm] IFormFile file, int id)
+        {
+            await _resourceService.UpdateResource(id, file);
+            return Ok();
+        }
+
+        // delete
         [HttpDelete("{id}")]
         public IActionResult DeleteResource(int id)
         {

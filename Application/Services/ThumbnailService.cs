@@ -6,7 +6,7 @@ namespace Application.Services
     internal class ThumbnailService : IThumbnailService
     {
         [SupportedOSPlatform("windows")]
-        public async Task<MemoryStream> GenerateImage(IFormFile file, int with, int height)
+        public async Task<byte[]> GenerateImage(IFormFile file, int with, int height)
         {
             using MemoryStream ms = new();
             await file.CopyToAsync(ms);
@@ -18,7 +18,7 @@ namespace Application.Services
             thumbnaiImage.Save(thumbnaiStream, System.Drawing.Imaging.ImageFormat.Jpeg);
             thumbnaiImage.Dispose();
 
-            return thumbnaiStream;
+            return thumbnaiStream.ToArray();
         }
     }
 }

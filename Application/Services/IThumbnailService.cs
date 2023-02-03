@@ -2,6 +2,6 @@
 {
     public interface IThumbnailService
     {
-        Task<MemoryStream> GenerateImage(IFormFile file, int width, int height);
+        Task<byte[]> GenerateImage(IFormFile file, int width, int height);
     }
 }

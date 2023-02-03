@@ -24,12 +24,13 @@ namespace Application.Services
             await file.CopyToAsync(stream);
         }
 
-        public void SaveFile(MemoryStream ms, string path)
+        public async Task SaveFileAsync(byte[] data, string path)
         {
-            FileStream file = new(path, FileMode.Create, FileAccess.Write);
-            ms.WriteTo(file);
-            file.Close();
-            ms.Close();
+            var directory = Path.GetDirectoryName(path);
+            if (directory != null && !Directory.Exists(directory))
+                Directory.CreateDirectory(directory);
+
+            await File.WriteAllBytesAsync(path, data);
         }
 
         public void DeleteFile(string filePath)
