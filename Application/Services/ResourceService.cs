@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using System.Drawing;
 using System.Runtime.Versioning;
 
 namespace Application.Services
@@ -45,9 +44,9 @@ namespace Application.Services
             var resource = new ResourceObject
             {
                 FileName = file.FileName,
-                FileType = fileType,
-                FilePath = filePath,
-                ThumbnailPath = thumbnailPath
+                FileType = fileType ?? "",
+                FilePath = filePath.Replace("\\", "/"),
+                ThumbnailPath = thumbnailPath.Replace("\\", "/"),
             };
 
             await _dbContext.AddAsync(resource);
@@ -63,6 +62,13 @@ namespace Application.Services
                 .Skip((page - 1) * count)
                 .Take(count)
                 .ToListAsync();
+        }
+
+        public async Task<int> GetPageTotal(int itemsPerPage)
+        {
+            int totalItems = await _dbContext.ResourceObjects.CountAsync();
+            int totalPages = (int)Math.Ceiling(totalItems / (double)itemsPerPage);
+            return totalPages;
         }
         #endregion
 

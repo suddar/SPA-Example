@@ -3,7 +3,8 @@
   export let onDelete;
   export let data;
 
-  let thumbnail = `data:image/jpeg;base64,${data}`;
+  var hostName = "https://localhost:6060/";
+  let thumbnailPath = hostName + data.thumbnailPath
   let showButtons = false;
 </script>
 
@@ -12,7 +13,7 @@
   on:mouseenter={() => (showButtons = true)}
   on:mouseleave={() => (showButtons = false)}
 >
-  <img src={thumbnail} alt="" style="position: relative;" />
+  <img src={thumbnailPath} alt="" style="position: relative;" />
   {#if showButtons}
     <div class="button-group">
       <button on:click={onEdit}>Edit</button>

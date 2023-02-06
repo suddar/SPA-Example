@@ -49,7 +49,6 @@
     <Folder Include="Apps\Dashboard\" />
     <Folder Include="Apps\EduApp\" />
     <Folder Include="wwwroot\images\" />
-    <Folder Include="wwwroot\resources\" />
   </ItemGroup>
 
 </Project>

@@ -2,18 +2,20 @@
   import EditResource from "./edit/edit-resource.svelte";
   import ResourceCard from "./resource-card.svelte";
 
-  let imageList = [];
+  export let imageList = [];
+
   let showEdit = false;
   let currentImageData = {};
 </script>
 
 {#each imageList as imageData}
   <ResourceCard
-    data={imageData.thumbnai}
+    data={imageData}
     onEdit={() => {
       showEdit = true;
       currentImageData = imageData;
     }}
+    onDelete={()=>{}}
   />
 {/each}
 

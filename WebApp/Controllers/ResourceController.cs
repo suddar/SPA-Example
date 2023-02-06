@@ -16,7 +16,7 @@ namespace WebApp.Controllers
 
         // create 
         [HttpPost]
-        public async Task<IActionResult> UploadResource([FromForm]List<IFormFile> files)
+        public async Task<IActionResult> UploadResource([FromForm] List<IFormFile> files)
         {
             foreach (var item in files)
                 await _resourceService.UploadResourceAsync(item);
@@ -26,10 +26,17 @@ namespace WebApp.Controllers
 
         // read
         [HttpGet()]
-        public async Task<IActionResult> GetResource(int pageIndex, int size)
+        public async Task<IActionResult> GetResources(int pageIndex, int size)
         {
             var resources = await _resourceService.GetResourcesAsync(pageIndex, size);
             return Ok(resources);
+        }
+
+        [HttpGet("{size}")]
+        public async Task<IActionResult> GetPagination(int size)
+        {
+            var pageTotal = await _resourceService.GetPageTotal(size);
+            return Ok(pageTotal);
         }
 
         [HttpPut()]
