@@ -3,7 +3,6 @@
   import ResourceCard from "./resource-card.svelte";
 
   export let imageList = [];
-
   let showEdit = false;
   let currentImageData = {};
 </script>
@@ -15,7 +14,7 @@
       showEdit = true;
       currentImageData = imageData;
     }}
-    onDelete={()=>{}}
+    onDelete={() => {}}
   />
 {/each}
 
