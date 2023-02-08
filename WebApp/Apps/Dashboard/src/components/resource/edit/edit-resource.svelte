@@ -1,70 +1,51 @@
 <script>
   import {
-    Button,
     Modal,
     ModalBody,
     ModalFooter,
     ModalHeader,
   } from "sveltestrap";
 
-  import axios from "axios";
+  import { hostName } from "../../../scripts/store";
 
-  export let resourceId = 1;
-  export let isShow = false;
+  export let isOpen = false;
   export let resourceName;
-  let newImageFile;
-
-  var hostName = "https://localhost:6060";
+  let imageFile;
 
   async function handleSave() {
     //const response = await fetch(`${hostName}/api/Resources/${resourceId}`);
 
-    var data = {
-      fileName: "test",
-      data: newImageFile,
-    };
-
     const formData = new FormData();
-    formData.append("file", newImageFile);
-
-    axios
-      .post(`${hostName}/api/Resources/edit/${resourceId}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    formData.append("file", imageFile);
 
     // axios
-    //   .put(`${hostName}/api/Resources/${resourceId}`, data)
+    //   .post(`${hostName}/api/Resources/edit/${resourceId}`, formData, {
+    //     headers: {
+    //       "Content-Type": "multipart/form-data",
+    //     },
+    //   })
     //   .then((response) => {
     //     console.log(response);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
     //   });
 
-    // axios({
-    //   method: "post",
-    //   url: "myurl",
-    //   data: bodyFormData,
-    //   headers: { "Content-Type": "multipart/form-data" },
-    // })
-    //   .then(function (response) {
-    //     //handle success
-    //     console.log(response);
-    //   })
-    //   .catch(function (response) {
-    //     //handle error
-    //     console.log(response);
-    //   });
+    const imageFormData = new FormData();
+    imageFormData.append("file", imageFile);
+
+    fetch(`${hostName+'resource'}`, {
+      method: "PUT",
+      body: imageFormData,
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.error(error));
   }
 </script>
 
 <div>
-  <Modal bind:isOpen={isShow}>
+  <Modal bind:isOpen={isOpen}>
     <ModalHeader>Modal title</ModalHeader>
     <ModalBody>
       <div>
@@ -77,13 +58,13 @@
           type="file"
           id="image-file"
           accept="image/*"
-          bind:value={newImageFile}
+          bind:value={imageFile}
         />
       </div>
     </ModalBody>
     <ModalFooter>
       <button on:click={handleSave}>Lưu</button>
-      <button on:click={() => (isShow = false)}>Hủy</button>
+      <button on:click={() => (isOpen = false)}>Hủy</button>
     </ModalFooter>
   </Modal>
 </div>

@@ -39,18 +39,27 @@ namespace WebApp.Controllers
             return Ok(pageTotal);
         }
 
+        // update
         [HttpPut()]
         public async Task<IActionResult> UpdateResource([FromForm] IFormFile file, int id)
         {
-            await _resourceService.UpdateResource(id, file);
+            await _resourceService.UpdateResourceAsync(id, file);
             return Ok();
         }
 
         // delete
         [HttpDelete("{id}")]
-        public IActionResult DeleteResource(int id)
+        public async Task<IActionResult> DeleteResource(int id)
         {
-            _resourceService.DeleteResource(id);
+            await _resourceService.DeleteResource(id);
+            return Ok();
+        }
+
+        // delete
+        [HttpDelete()]
+        public async Task<IActionResult> DeleteAllResources()
+        {
+            await _resourceService.DeleteAllResources();
             return Ok();
         }
     }

@@ -49,6 +49,7 @@ namespace Application.Services
                 ThumbnailPath = thumbnailPath.Replace("\\", "/"),
             };
 
+            // add and save new entity
             await _dbContext.AddAsync(resource);
             await _dbContext.SaveChangesAsync();
             return resource.Id;
@@ -73,26 +74,35 @@ namespace Application.Services
         #endregion
 
         #region Update
-        public async Task UpdateResource(int id, IFormFile file)
+        public async Task UpdateResourceAsync(int id, IFormFile file)
         {
             var resource = _dbContext.ResourceObjects.Find(id);
             if (resource != null)
             {
-                var filePath = resource.FilePath;
-                if (File.Exists(filePath))
-                {
-                    File.Delete(filePath);
-                }
+                // delete file and thumbnail
+                DeleteOldFiles(resource);
 
+                // get file type
+                var fileType = GetFileType(file.FileName);
+
+                // save uploaded file
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                var filePath = Path.Combine("resources", fileType, fileName);
+                await _fileService.SaveFileAsync(file, Path.Combine(_webRootPath, filePath));
+
+                // save thumbnail
+                var thumbnailName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                var thumbnailPath = Path.Combine("resources", fileType, thumbnailName);
+                var thumbnailData = await _thumbnailService.GenerateImage(file, 120, 120);
+                await _fileService.SaveFileAsync(thumbnailData, Path.Combine(_webRootPath, thumbnailPath));
+
+                // update data
                 resource.FileName = file.FileName;
                 resource.FileType = GetFileType(file.FileName);
-                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                filePath = Path.Combine(_webRootPath, "resources", resource.FileType, fileName);
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    await file.CopyToAsync(stream);
-                }
-                resource.FilePath = filePath;
+                resource.FilePath = filePath.Replace("\\", "/");
+                resource.ThumbnailPath = thumbnailPath.Replace("\\", "/");
+
+                // update and save
                 _dbContext.ResourceObjects.Update(resource);
                 await _dbContext.SaveChangesAsync();
             }
@@ -100,19 +110,26 @@ namespace Application.Services
         #endregion
 
         #region Delete
-        public async void DeleteResource(int id)
+        public async Task DeleteResource(int id)
         {
             var resource = await _dbContext.ResourceObjects.FindAsync(id);
             if (resource != null)
             {
-                var filePath = resource.FilePath;
-                if (File.Exists(filePath))
-                {
-                    File.Delete(filePath);
-                }
+                // delete file and thumbnail
+                DeleteOldFiles(resource);
 
+                // remove entity
                 _dbContext.Remove(resource);
                 await _dbContext.SaveChangesAsync();
+            }
+        }
+
+        public async Task DeleteAllResources()
+        {
+            var resources = _dbContext.ResourceObjects.ToList();
+            foreach (var resource in resources)
+            {
+                await DeleteResource(resource.Id);
             }
         }
         #endregion
@@ -138,6 +155,15 @@ namespace Application.Services
             {
                 throw new Exception("Invalid file type.");
             }
+        }
+
+        private void DeleteOldFiles(ResourceObject resource)
+        {
+            if (resource.FilePath != null)
+                _fileService.DeleteFile(resource.FilePath);
+
+            if (resource.ThumbnailPath != null)
+                _fileService.DeleteFile(resource.ThumbnailPath);
         }
         #endregion
     }

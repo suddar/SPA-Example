@@ -2,30 +2,31 @@
   import { onMount } from "svelte";
   import ResourceManager from "../../components/resource/resource-manager.svelte";
   import Paging from "../../components/ui/paging.svelte";
+  import { hostName } from "../../scripts/store";
 
-  var hostName = "https://localhost:6060";
   let imageDataList = [];
   let pageTotal;
   let pageSize = 3;
 
   onMount(async () => {
     // get page total by count
-    const pageTotalResponse = await fetch(`${hostName}/Resource/${pageSize}`);
+    const pageTotalResponse = await fetch(`${hostName}Resource/${pageSize}`);
     pageTotal = await pageTotalResponse.json();
-    //imageDataList = await getImageList(1, pageSize);
+
+    await onLoadPage(1);
   });
 
   // get image data list
   async function getImageList(index, size) {
     const resourceResponse = await fetch(
-      `${hostName}/Resource?pageIndex=${index}&size=${size}`
+      `${hostName}Resource?pageIndex=${index}&size=${size}`
     );
     return await resourceResponse.json();
   }
 
   async function onLoadPage(index) {
     imageDataList = await getImageList(index, pageSize);
-    console.log(imageDataList);
+    console.log(imageDataList[0]);
   }
 </script>
 

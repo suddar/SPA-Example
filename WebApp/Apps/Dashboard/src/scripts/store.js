@@ -1,2 +1,2 @@
   //store.js
-  export const hostname = 'https://localhost:6060';
+  export const hostName = 'https://localhost:6060/';

@@ -1,9 +1,11 @@
 <script>
+  import DeleteResource from "./delete/delete-resource.svelte";
   import EditResource from "./edit/edit-resource.svelte";
   import ResourceCard from "./resource-card.svelte";
 
   export let imageList = [];
-  let showEdit = false;
+  let isShowEdit = false;
+  let isShowDelete = false;
   let currentImageData = {};
 </script>
 
@@ -11,11 +13,17 @@
   <ResourceCard
     data={imageData}
     onEdit={() => {
-      showEdit = true;
+      isShowEdit = true;
       currentImageData = imageData;
     }}
-    onDelete={() => {}}
+    onDelete={() => {
+      isShowDelete = true;
+    }}
   />
 {/each}
 
-<EditResource bind:isShow={showEdit} resourceName={currentImageData.name} />
+<EditResource bind:isOpen={isShowEdit} resourceName={currentImageData.name} />
+<DeleteResource
+  bind:isOpen={isShowDelete}
+  resourceName={currentImageData.name}
+/>

@@ -2,9 +2,14 @@
   import ModalContent from "../../modal/modal-content.svelte";
   import ModalOverlay from "../../modal/modal-overlay.svelte";
 
-  let isOpen = true;
-  let newImageFile;
+  export let isOpen = false;
   export let imageName;
+  export let resourceId;
+
+  async function onDelete() {
+    const response = await fetch(`${hostName}Resource/${resourceId}`);
+    console.log(response);
+  }
 </script>
 
 {#if isOpen}
@@ -12,14 +17,8 @@
     <ModalOverlay />
     <ModalContent>
       <label for="image-file">File: {imageName}</label>
-      <input
-        type="file"
-        id="image-file"
-        accept="image/*"
-        bind:value={newImageFile}
-      />
       <div class="button-container">
-        <button>Submit</button>
+        <button on:click={onDelete}>Submit</button>
         <button on:click={() => (isOpen = false)}>Cancel</button>
       </div>
     </ModalContent>

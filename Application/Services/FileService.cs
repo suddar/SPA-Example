@@ -35,8 +35,8 @@ namespace Application.Services
 
         public void DeleteFile(string filePath)
         {
-            if (File.Exists(_environment.WebRootPath + filePath))
-                File.Delete(_environment.WebRootPath + filePath);
+            var path = Path.Combine(_environment.WebRootPath, filePath);
+            if (File.Exists(path)) File.Delete(path);
         }
     }
 }
