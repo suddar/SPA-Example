@@ -1,69 +1,73 @@
 <script>
-  import {
-    Modal,
-    ModalBody,
-    ModalFooter,
-    ModalHeader,
-  } from "sveltestrap";
-
+  import { Modal, ModalBody, ModalFooter, ModalHeader } from "sveltestrap";
   import { hostName } from "../../../scripts/store";
+  import axios from "axios";
 
   export let isOpen = false;
-  export let resourceName;
-  let imageFile;
+  export let data;
 
-  async function handleSave() {
-    //const response = await fetch(`${hostName}/api/Resources/${resourceId}`);
+  export let refesh;
+  let file;
 
+  async function handleUpdate() {
+    // const formData = new FormData();
+    // formData.append("file", file);
+    // const response = await fetch(`${hostName}resource?id=${data.id}`, {
+    //   headers: {
+    //     "Content-Type": "multipart/form-data",
+    //   },
+    //   method: "POST",
+    //   body: formData,
+    // });
+    // if (response.ok) {
+    //   console.log(response);
+    // } else {
+    //   console.log("not ok");
+    // }
+    // isOpen = false;
+    //refesh();
+    // var xhr = new XMLHttpRequest();
+    // xhr.open("PUT", `${hostName}resource?id=${data.id}`, true);
+    // xhr.setRequestHeader("Content-Type", "multipart/form-data");
+    // xhr.onreadystatechange = function () {
+    //   if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+    //     console.log(xhr.responseText);
+    //   }
+    // };
+    // xhr.send(formData);
+
+    await postImage(file);
+  }
+
+  async function postImage(file) {
+    console.log(file);
     const formData = new FormData();
-    formData.append("file", imageFile);
+    formData.append("file", file);
 
-    // axios
-    //   .post(`${hostName}/api/Resources/edit/${resourceId}`, formData, {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //     },
-    //   })
-    //   .then((response) => {
-    //     console.log(response);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
-
-    const imageFormData = new FormData();
-    imageFormData.append("file", imageFile);
-
-    fetch(`${hostName+'resource'}`, {
-      method: "PUT",
-      body: imageFormData,
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data))
-      .catch((error) => console.error(error));
+    axios.put(`${hostName}resource?id=${data.id}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   }
 </script>
 
 <div>
-  <Modal bind:isOpen={isOpen}>
+  <Modal bind:isOpen>
     <ModalHeader>Modal title</ModalHeader>
     <ModalBody>
       <div>
         <label for="image-name">Nhập tên file</label>
-        <input type="text" id="image-name" bind:value={resourceName} />
+        <input type="text" id="image-name" bind:value={data.fileName} />
       </div>
       <div>
         <label for="image-file">File:</label>
-        <input
-          type="file"
-          id="image-file"
-          accept="image/*"
-          bind:value={imageFile}
-        />
+        <input type="file" id="image-file" accept="image/*" bind:value={file} />
       </div>
+      <input accept="image/png, image/jpeg" bind:value={file} type="file" />
     </ModalBody>
     <ModalFooter>
-      <button on:click={handleSave}>Lưu</button>
+      <button on:click={handleUpdate}>Update</button>
       <button on:click={() => (isOpen = false)}>Hủy</button>
     </ModalFooter>
   </Modal>

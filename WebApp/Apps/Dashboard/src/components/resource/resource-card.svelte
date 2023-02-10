@@ -4,7 +4,6 @@
   export let onEdit;
   export let onDelete;
   export let data;
-
   let showButtons = false;
 </script>
 
@@ -16,8 +15,16 @@
   <img src={hostName + data.thumbnailPath} alt="" style="position: relative;" />
   {#if showButtons}
     <div class="button-group">
-      <button on:click={onEdit}>Edit</button>
-      <button on:click={onDelete}>Delete</button>
+      <i
+        class="fa-sharp fa-solid fa-square-pen"
+        style="font-size: 26px; color:white;"
+        on:mouseup={() => onEdit(data)}
+      />
+      <i
+        class="fa-solid fa-trash"
+        style="font-size: 26px; color:white;"
+        on:mouseup={() => onDelete(data)}
+      />
     </div>
   {/if}
 </div>
@@ -30,7 +37,8 @@
   }
   .button-group {
     position: absolute;
-    bottom: 0;
-    right: 0;
+    bottom: 6px;
+    right: 6px;
+    cursor: pointer;
   }
 </style>

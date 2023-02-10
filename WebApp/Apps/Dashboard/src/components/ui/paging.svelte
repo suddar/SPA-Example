@@ -1,16 +1,16 @@
 <script>
   export let pageTotal;
-  export let loadData;
+  export let onLoadPage;
   let currentPage = 1;
 
   function previous() {
     if (currentPage > 1) currentPage--;
-    loadData(currentPage);
+    onLoadPage(currentPage);
   }
 
   function next() {
     if (currentPage < pageTotal) currentPage++;
-    loadData(currentPage);
+    onLoadPage(currentPage);
   }
 </script>
 

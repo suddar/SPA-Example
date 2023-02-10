@@ -41,9 +41,19 @@ namespace WebApp.Controllers
 
         // update
         [HttpPut()]
+        [Consumes("multipart/form-data")]
         public async Task<IActionResult> UpdateResource([FromForm] IFormFile file, int id)
         {
+            Console.WriteLine("okkkk " + file);
             await _resourceService.UpdateResourceAsync(id, file);
+            return Ok();
+        }
+
+        [HttpPost("test")]
+        public async Task<IActionResult> PutFile([FromForm] IFormFile file)
+        {
+            Console.WriteLine(file);
+            // Xử lý tệp tại đây
             return Ok();
         }
 

@@ -1,12 +1,13 @@
 <script>
   import { onMount } from "svelte";
-  import ResourceManager from "../../components/resource/resource-manager.svelte";
+  import ResourceCardList from "../../components/resource/resource-card-list.svelte";
   import Paging from "../../components/ui/paging.svelte";
   import { hostName } from "../../scripts/store";
 
   let imageDataList = [];
   let pageTotal;
   let pageSize = 3;
+  let currentPage;
 
   onMount(async () => {
     // get page total by count
@@ -25,10 +26,17 @@
   }
 
   async function onLoadPage(index) {
+    currentPage = index;
     imageDataList = await getImageList(index, pageSize);
     console.log(imageDataList[0]);
   }
+
+  async function refesh() {
+    const pageTotalResponse = await fetch(`${hostName}Resource/${pageSize}`);
+    pageTotal = await pageTotalResponse.json();
+    onLoadPage(currentPage);
+  }
 </script>
 
-<ResourceManager imageList={imageDataList} />
-<Paging {pageTotal} loadData={onLoadPage} />
+<ResourceCardList bind:imageDataList {refesh} />
+<Paging bind:pageTotal {onLoadPage} />
